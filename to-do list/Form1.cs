@@ -122,5 +122,21 @@ namespace to_do_list
                 UpdateUI();
             }
         }
+
+        private void listBoxIncomplete_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxIncomplete.SelectedIndex != -1)
+            {
+                listBoxComplete.ClearSelected();
+            }
+        }
+
+        private void listBoxComplete_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxComplete.SelectedIndex != -1)
+            {
+                listBoxIncomplete.ClearSelected();
+            }
+        }
     }
 }

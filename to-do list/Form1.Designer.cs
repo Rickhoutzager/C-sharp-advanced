@@ -46,6 +46,7 @@
             this.listBoxIncomplete.Name = "listBoxIncomplete";
             this.listBoxIncomplete.Size = new System.Drawing.Size(319, 304);
             this.listBoxIncomplete.TabIndex = 0;
+            this.listBoxIncomplete.SelectedIndexChanged += new System.EventHandler(this.listBoxIncomplete_SelectedIndexChanged);
             // 
             // listBoxComplete
             // 
@@ -55,6 +56,7 @@
             this.listBoxComplete.Name = "listBoxComplete";
             this.listBoxComplete.Size = new System.Drawing.Size(319, 279);
             this.listBoxComplete.TabIndex = 1;
+            this.listBoxComplete.SelectedIndexChanged += new System.EventHandler(this.listBoxComplete_SelectedIndexChanged);
             // 
             // label1
             // 
