@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|c:\\mac\\home\\documents\\github\\c-sharp-advanced\\to-do list\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|solutionrelative:to-do list\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|c:\\mac\\home\\documents\\github\\c-sharp-advanced\\to-do list\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|solutionrelative:to-do list\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
@@ -15,12 +11,16 @@
       "RelativeMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|solutionrelative:to-do list\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|c:\\mac\\home\\documents\\github\\c-sharp-advanced\\to-do list\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|solutionrelative:to-do list\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|c:\\mac\\home\\documents\\github\\c-sharp-advanced\\to-do list\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|solutionrelative:to-do list\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|c:\\mac\\home\\documents\\github\\c-sharp-advanced\\to-do list\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|solutionrelative:to-do list\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|c:\\mac\\home\\documents\\github\\c-sharp-advanced\\to-do list\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0D3C104E-C38B-4665-BF69-4AB24691CEF7}|to-do list\\to-do list.csproj|solutionrelative:to-do list\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,19 +38,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.cs",
               "RelativeDocumentMoniker": "to-do list\\Form1.cs",
-              "ToolTip": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.cs [Design]*",
-              "RelativeToolTip": "to-do list\\Form1.cs [Design]*",
+              "ToolTip": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.cs [Design]",
+              "RelativeToolTip": "to-do list\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-20T11:50:36.79Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "TodoItem.cs",
               "DocumentMoniker": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\TodoItem.cs",
               "RelativeDocumentMoniker": "to-do list\\TodoItem.cs",
@@ -63,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Program.cs",
               "RelativeDocumentMoniker": "to-do list\\Program.cs",
@@ -76,25 +76,25 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.cs",
               "RelativeDocumentMoniker": "to-do list\\Form1.cs",
-              "ToolTip": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.cs*",
-              "RelativeToolTip": "to-do list\\Form1.cs*",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAmwI0AAAABAAAAAAAAAA==",
+              "ToolTip": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.cs",
+              "RelativeToolTip": "to-do list\\Form1.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAIAvwHkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-20T11:27:27.423Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "to-do list\\Form1.Designer.cs",
-              "ToolTip": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.Designer.cs*",
-              "RelativeToolTip": "to-do list\\Form1.Designer.cs*",
+              "ToolTip": "C:\\Mac\\Home\\Documents\\GitHub\\C-sharp-advanced\\to-do list\\Form1.Designer.cs",
+              "RelativeToolTip": "to-do list\\Form1.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-20T10:51:43.943Z",

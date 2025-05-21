@@ -121,6 +121,9 @@ namespace to_do_list
                 SaveTodoList(filePath);
                 UpdateUI();
             }
+            listBoxIncomplete.ClearSelected();
+            listBoxComplete.ClearSelected();
+            UpdateToggleButtonLabel();
         }
 
         private void listBoxIncomplete_SelectedIndexChanged(object sender, EventArgs e)
@@ -129,6 +132,7 @@ namespace to_do_list
             {
                 listBoxComplete.ClearSelected();
             }
+            UpdateToggleButtonLabel();
         }
 
         private void listBoxComplete_SelectedIndexChanged(object sender, EventArgs e)
@@ -136,6 +140,25 @@ namespace to_do_list
             if (listBoxComplete.SelectedIndex != -1)
             {
                 listBoxIncomplete.ClearSelected();
+            }
+            UpdateToggleButtonLabel();
+        }
+        void UpdateToggleButtonLabel()
+        {
+            if (listBoxIncomplete.SelectedItem != null)
+            {
+                btnToggleComplete.Text = "Mark as Complete";
+                btnToggleComplete.Enabled = true;
+            }
+            else if (listBoxComplete.SelectedItem != null)
+            {
+                btnToggleComplete.Text = "Mark as Incomplete";
+                btnToggleComplete.Enabled = true;
+            }
+            else
+            {
+                btnToggleComplete.Text = "Toggle Status";
+                btnToggleComplete.Enabled = false;
             }
         }
     }

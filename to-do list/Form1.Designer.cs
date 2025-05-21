@@ -104,7 +104,7 @@
             // 
             this.btnToggleComplete.Location = new System.Drawing.Point(260, 541);
             this.btnToggleComplete.Name = "btnToggleComplete";
-            this.btnToggleComplete.Size = new System.Drawing.Size(145, 59);
+            this.btnToggleComplete.Size = new System.Drawing.Size(223, 97);
             this.btnToggleComplete.TabIndex = 6;
             this.btnToggleComplete.Text = "Toggle Complete";
             this.btnToggleComplete.UseVisualStyleBackColor = true;
