@@ -36,6 +36,8 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.textBoxNewItem = new System.Windows.Forms.TextBox();
             this.btnToggleComplete = new System.Windows.Forms.Button();
+            this.btnSaveFile = new System.Windows.Forms.Button();
+            this.btnLoadFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxIncomplete
@@ -110,11 +112,34 @@
             this.btnToggleComplete.UseVisualStyleBackColor = true;
             this.btnToggleComplete.Click += new System.EventHandler(this.btnToggleComplete_Click_1);
             // 
+            // btnSaveFile
+            // 
+            this.btnSaveFile.Location = new System.Drawing.Point(68, 38);
+            this.btnSaveFile.Name = "btnSaveFile";
+            this.btnSaveFile.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnSaveFile.Size = new System.Drawing.Size(192, 52);
+            this.btnSaveFile.TabIndex = 7;
+            this.btnSaveFile.Text = "Save";
+            this.btnSaveFile.UseVisualStyleBackColor = true;
+            this.btnSaveFile.Click += new System.EventHandler(this.btnSaveFile_Click_1);
+            // 
+            // btnLoadFile
+            // 
+            this.btnLoadFile.Location = new System.Drawing.Point(304, 41);
+            this.btnLoadFile.Name = "btnLoadFile";
+            this.btnLoadFile.Size = new System.Drawing.Size(197, 48);
+            this.btnLoadFile.TabIndex = 8;
+            this.btnLoadFile.Text = "Load";
+            this.btnLoadFile.UseVisualStyleBackColor = true;
+            this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1126, 871);
+            this.Controls.Add(this.btnLoadFile);
+            this.Controls.Add(this.btnSaveFile);
             this.Controls.Add(this.btnToggleComplete);
             this.Controls.Add(this.textBoxNewItem);
             this.Controls.Add(this.btnAdd);
@@ -140,6 +165,8 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox textBoxNewItem;
         private System.Windows.Forms.Button btnToggleComplete;
+        private System.Windows.Forms.Button btnSaveFile;
+        private System.Windows.Forms.Button btnLoadFile;
     }
 }
 

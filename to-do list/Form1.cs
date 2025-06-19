@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -38,53 +40,16 @@ namespace to_do_list
             listBoxComplete.DisplayMember = "Title";
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAdd_Click_1(object sender, EventArgs e)
         {
             string newTitle = textBoxNewItem.Text.Trim();
             if (!string.IsNullOrEmpty(newTitle))
             {
-                TodoItem newItem = Factory.CreateTodoItem(newTitle); // Using Factory pattern
-                todoList.Add(newItem);
+                todoList.Add(new TodoItem { Title = newTitle, Completed = false });
                 TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
                 UpdateUI();
                 textBoxNewItem.Clear();
             }
-        }
-
-        private void btnToggleComplete_Click(object sender, EventArgs e)
-        {
-            TodoItem selectedItem = null;
-
-            if (listBoxIncomplete.SelectedItem != null)
-            {
-                selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
-                selectedItem.Completed = true;
-            }
-            else if (listBoxComplete.SelectedItem != null)
-            {
-                selectedItem = (TodoItem)listBoxComplete.SelectedItem;
-                selectedItem.Completed = false;
-            }
-
-            if (selectedItem != null)
-            {
-                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
-                UpdateUI();
-            }
-        }
-
-        private void btnAdd_Click_1(object sender, EventArgs e)
-        {
-           
-                string newTitle = textBoxNewItem.Text.Trim();
-                if (!string.IsNullOrEmpty(newTitle))
-                {
-                    todoList.Add(new TodoItem { Title = newTitle, Completed = false });
-                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
-                UpdateUI();
-                    textBoxNewItem.Clear();
-                }
-            
         }
 
         private void btnToggleComplete_Click_1(object sender, EventArgs e)
@@ -146,6 +111,41 @@ namespace to_do_list
                 btnToggleComplete.Text = "Toggle Status";
                 btnToggleComplete.Enabled = false;
             }
+        }
+        private void btnSaveFile_Click_1(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON files (*.json)|*.json|XML files (*.xml)|*.xml";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = saveFileDialog.FileName;
+                ITodoStorageAdapter adapter = GetAdapterByExtension(path);
+                adapter.Save(path, todoList);
+            }
+        }
+
+        private void btnLoadFile_Click_1(object sender, EventArgs e)
+        {
+            using OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json|XML files (*.xml)|*.xml";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = openFileDialog.FileName;
+                ITodoStorageAdapter adapter = GetAdapterByExtension(path);
+                todoList = adapter.Load(path);
+                UpdateUI();
+            }
+        }
+
+        private ITodoStorageAdapter GetAdapterByExtension(string filePath)
+        {
+            string ext = Path.GetExtension(filePath).ToLower();
+            return ext switch
+            {
+                ".json" => new JsonTodoStorageAdapter(),
+                ".xml" => new XmlTodoStorageAdapter(),
+                _ => throw new NotSupportedException("Unsupported file format.")
+            };
         }
     }
 }
