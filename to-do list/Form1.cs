@@ -147,5 +147,10 @@ namespace to_do_list
                 _ => throw new NotSupportedException("Unsupported file format.")
             };
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

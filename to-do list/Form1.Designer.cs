@@ -38,13 +38,14 @@
             this.btnToggleComplete = new System.Windows.Forms.Button();
             this.btnSaveFile = new System.Windows.Forms.Button();
             this.btnLoadFile = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBoxIncomplete
             // 
             this.listBoxIncomplete.FormattingEnabled = true;
             this.listBoxIncomplete.ItemHeight = 25;
-            this.listBoxIncomplete.Location = new System.Drawing.Point(725, 118);
+            this.listBoxIncomplete.Location = new System.Drawing.Point(40, 200);
             this.listBoxIncomplete.Name = "listBoxIncomplete";
             this.listBoxIncomplete.Size = new System.Drawing.Size(319, 304);
             this.listBoxIncomplete.TabIndex = 0;
@@ -54,9 +55,9 @@
             // 
             this.listBoxComplete.FormattingEnabled = true;
             this.listBoxComplete.ItemHeight = 25;
-            this.listBoxComplete.Location = new System.Drawing.Point(725, 522);
+            this.listBoxComplete.Location = new System.Drawing.Point(416, 200);
             this.listBoxComplete.Name = "listBoxComplete";
-            this.listBoxComplete.Size = new System.Drawing.Size(319, 279);
+            this.listBoxComplete.Size = new System.Drawing.Size(319, 304);
             this.listBoxComplete.TabIndex = 1;
             this.listBoxComplete.SelectedIndexChanged += new System.EventHandler(this.listBoxComplete_SelectedIndexChanged);
             // 
@@ -70,7 +71,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(725, 57);
+            this.label2.Location = new System.Drawing.Point(40, 172);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(180, 25);
             this.label2.TabIndex = 2;
@@ -79,17 +80,18 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(725, 459);
+            this.label3.Location = new System.Drawing.Point(411, 172);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(179, 25);
             this.label3.TabIndex = 3;
             this.label3.Text = "Completed Tasks";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(149, 404);
+            this.btnAdd.Location = new System.Drawing.Point(304, 621);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(200, 80);
+            this.btnAdd.Size = new System.Drawing.Size(88, 31);
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -97,14 +99,14 @@
             // 
             // textBoxNewItem
             // 
-            this.textBoxNewItem.Location = new System.Drawing.Point(205, 224);
+            this.textBoxNewItem.Location = new System.Drawing.Point(45, 621);
             this.textBoxNewItem.Name = "textBoxNewItem";
-            this.textBoxNewItem.Size = new System.Drawing.Size(297, 31);
+            this.textBoxNewItem.Size = new System.Drawing.Size(247, 31);
             this.textBoxNewItem.TabIndex = 5;
             // 
             // btnToggleComplete
             // 
-            this.btnToggleComplete.Location = new System.Drawing.Point(260, 541);
+            this.btnToggleComplete.Location = new System.Drawing.Point(512, 555);
             this.btnToggleComplete.Name = "btnToggleComplete";
             this.btnToggleComplete.Size = new System.Drawing.Size(223, 97);
             this.btnToggleComplete.TabIndex = 6;
@@ -133,11 +135,21 @@
             this.btnLoadFile.UseVisualStyleBackColor = true;
             this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click_1);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(40, 584);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(102, 25);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Add task:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1126, 871);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnLoadFile);
             this.Controls.Add(this.btnSaveFile);
             this.Controls.Add(this.btnToggleComplete);
@@ -167,6 +179,7 @@
         private System.Windows.Forms.Button btnToggleComplete;
         private System.Windows.Forms.Button btnSaveFile;
         private System.Windows.Forms.Button btnLoadFile;
+        private System.Windows.Forms.Label label4;
     }
 }
 
