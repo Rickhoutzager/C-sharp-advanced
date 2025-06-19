@@ -11,33 +11,17 @@ namespace to_do_list
     public partial class Form1 : Form
     {
         List<TodoItem> todoList = new List<TodoItem>();
-        string filePath = "todo.json";
 
         public Form1()
         {
             InitializeComponent();
-            LoadTodoList(filePath);
+            LoadTodoList();
             UpdateUI();
         }
 
-        void LoadTodoList(string path)
+        void LoadTodoList()
         {
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                todoList = JsonSerializer.Deserialize<List<TodoItem>>(json) ?? new List<TodoItem>();
-            }
-            else
-            {
-                todoList = new List<TodoItem>();
-            }
-        }
-
-        void SaveTodoList(string path)
-        {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(todoList, options);
-            File.WriteAllText(path, json);
+            todoList = TodoStorage.Instance.Load(); // Using Singleton pattern to load the todo list
         }
 
         void UpdateUI()
@@ -61,7 +45,7 @@ namespace to_do_list
             {
                 TodoItem newItem = Factory.CreateTodoItem(newTitle); // Using Factory pattern
                 todoList.Add(newItem);
-                SaveTodoList(filePath);
+                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
                 UpdateUI();
                 textBoxNewItem.Clear();
             }
@@ -84,7 +68,7 @@ namespace to_do_list
 
             if (selectedItem != null)
             {
-                SaveTodoList(filePath);
+                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
                 UpdateUI();
             }
         }
@@ -96,8 +80,8 @@ namespace to_do_list
                 if (!string.IsNullOrEmpty(newTitle))
                 {
                     todoList.Add(new TodoItem { Title = newTitle, Completed = false });
-                    SaveTodoList(filePath);
-                    UpdateUI();
+                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
+                UpdateUI();
                     textBoxNewItem.Clear();
                 }
             
@@ -120,7 +104,7 @@ namespace to_do_list
 
             if (selectedItem != null)
             {
-                SaveTodoList(filePath);
+                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
                 UpdateUI();
             }
             listBoxIncomplete.ClearSelected();
