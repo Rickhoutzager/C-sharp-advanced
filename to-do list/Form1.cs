@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
+using to_do_list.Patterns;
 
 namespace to_do_list
 {
@@ -58,7 +59,8 @@ namespace to_do_list
             string newTitle = textBoxNewItem.Text.Trim();
             if (!string.IsNullOrEmpty(newTitle))
             {
-                todoList.Add(new TodoItem { Title = newTitle, Completed = false });
+                TodoItem newItem = Factory.CreateTodoItem(newTitle); // Using Factory pattern
+                todoList.Add(newItem);
                 SaveTodoList(filePath);
                 UpdateUI();
                 textBoxNewItem.Clear();
