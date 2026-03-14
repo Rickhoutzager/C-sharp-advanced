@@ -1,30 +1,72 @@
 [
   {
-    "Title": "hithere",
-    "Completed": false,
-    "Category": "Personal",
-    "DueDate": "2026-03-14T19:43:47.9077458+01:00",
-    "Priority": 2
-  },
-  {
-    "Title": "test1",
-    "Completed": true,
-    "Category": "General",
-    "DueDate": null,
-    "Priority": 1
-  },
-  {
-    "Title": "hi",
+    "Title": "Complete project documentation",
     "Completed": false,
     "Category": "Work",
-    "DueDate": "2026-03-18T14:21:59.629",
+    "DueDate": "2026-03-20T09:00:00",
     "Priority": 5
   },
   {
-    "Title": "eat vegetables",
+    "Title": "Review code changes",
+    "Completed": false,
+    "Category": "Work",
+    "DueDate": "2026-03-15T17:00:00",
+    "Priority": 4
+  },
+  {
+    "Title": "Team meeting preparation",
+    "Completed": true,
+    "Category": "Work",
+    "DueDate": "2026-03-14T10:00:00",
+    "Priority": 3
+  },
+  {
+    "Title": "Grocery shopping",
     "Completed": false,
     "Category": "Personal",
-    "DueDate": "2026-03-18T19:47:17.575",
+    "DueDate": "2026-03-16T18:00:00",
+    "Priority": 2
+  },
+  {
+    "Title": "Exercise routine",
+    "Completed": true,
+    "Category": "Health",
+    "DueDate": "2026-03-14T07:00:00",
+    "Priority": 3
+  },
+  {
+    "Title": "Read new book",
+    "Completed": false,
+    "Category": "Personal",
+    "DueDate": "2026-03-25T21:00:00",
+    "Priority": 2
+  },
+  {
+    "Title": "Fix critical bug",
+    "Completed": false,
+    "Category": "Work",
+    "DueDate": "2026-03-14T23:59:00",
+    "Priority": 5
+  },
+  {
+    "Title": "Plan weekend trip",
+    "Completed": false,
+    "Category": "Personal",
+    "DueDate": "2026-03-19T12:00:00",
     "Priority": 4
+  },
+  {
+    "Title": "Update resume",
+    "Completed": false,
+    "Category": "Work",
+    "DueDate": "2026-03-22T16:00:00",
+    "Priority": 3
+  },
+  {
+    "Title": "Meditation practice",
+    "Completed": true,
+    "Category": "Health",
+    "DueDate": "2026-03-14T20:00:00",
+    "Priority": 2
   }
 ]
