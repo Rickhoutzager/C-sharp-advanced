@@ -227,16 +227,6 @@
             this.btnAddDecorated.UseVisualStyleBackColor = true;
             this.btnAddDecorated.Click += new System.EventHandler(this.btnAddDecorated_Click);
             // 
-            // btnEditSelected
-            // 
-            this.btnEditSelected.Location = new System.Drawing.Point(470, 714);
-            this.btnEditSelected.Name = "btnEditSelected";
-            this.btnEditSelected.Size = new System.Drawing.Size(150, 33);
-            this.btnEditSelected.TabIndex = 17;
-            this.btnEditSelected.Text = "Edit Selected";
-            this.btnEditSelected.UseVisualStyleBackColor = true;
-            this.btnEditSelected.Click += new System.EventHandler(this.btnEditSelected_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -287,7 +277,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBoxCategory;
         private System.Windows.Forms.Button btnAddDecorated;
-        private System.Windows.Forms.Button btnEditSelected;
     }
 }
 
