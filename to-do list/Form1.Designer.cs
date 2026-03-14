@@ -39,6 +39,13 @@
             this.btnSaveFile = new System.Windows.Forms.Button();
             this.btnLoadFile = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBoxPriority = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dateTimePickerDueDate = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
+            this.btnAddDecorated = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxIncomplete
@@ -144,11 +151,104 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Add task:";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(40, 669);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 25);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Priority:";
+            // 
+            // comboBoxPriority
+            // 
+            this.comboBoxPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPriority.FormattingEnabled = true;
+            this.comboBoxPriority.Items.AddRange(new object[] {
+            "1 - Low",
+            "2 - Medium",
+            "3 - High",
+            "4 - Very High",
+            "5 - Urgent"});
+            this.comboBoxPriority.Location = new System.Drawing.Point(130, 666);
+            this.comboBoxPriority.Name = "comboBoxPriority";
+            this.comboBoxPriority.Size = new System.Drawing.Size(162, 33);
+            this.comboBoxPriority.TabIndex = 11;
+            this.comboBoxPriority.SelectedIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(320, 669);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(96, 25);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Due Date:";
+            // 
+            // dateTimePickerDueDate
+            // 
+            this.dateTimePickerDueDate.Location = new System.Drawing.Point(422, 666);
+            this.dateTimePickerDueDate.Name = "dateTimePickerDueDate";
+            this.dateTimePickerDueDate.Size = new System.Drawing.Size(250, 31);
+            this.dateTimePickerDueDate.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(40, 717);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(96, 25);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Category:";
+            // 
+            // comboBoxCategory
+            // 
+            this.comboBoxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCategory.FormattingEnabled = true;
+            this.comboBoxCategory.Items.AddRange(new object[] {
+            "General",
+            "Work",
+            "Personal",
+            "Shopping",
+            "Health"});
+            this.comboBoxCategory.Location = new System.Drawing.Point(142, 714);
+            this.comboBoxCategory.Name = "comboBoxCategory";
+            this.comboBoxCategory.Size = new System.Drawing.Size(150, 33);
+            this.comboBoxCategory.TabIndex = 15;
+            this.comboBoxCategory.SelectedIndex = 0;
+            // 
+            // btnAddDecorated
+            // 
+            this.btnAddDecorated.Location = new System.Drawing.Point(304, 714);
+            this.btnAddDecorated.Name = "btnAddDecorated";
+            this.btnAddDecorated.Size = new System.Drawing.Size(150, 33);
+            this.btnAddDecorated.TabIndex = 16;
+            this.btnAddDecorated.Text = "Add Decorated";
+            this.btnAddDecorated.UseVisualStyleBackColor = true;
+            this.btnAddDecorated.Click += new System.EventHandler(this.btnAddDecorated_Click);
+            // 
+            // btnEditSelected
+            // 
+            this.btnEditSelected.Location = new System.Drawing.Point(470, 714);
+            this.btnEditSelected.Name = "btnEditSelected";
+            this.btnEditSelected.Size = new System.Drawing.Size(150, 33);
+            this.btnEditSelected.TabIndex = 17;
+            this.btnEditSelected.Text = "Edit Selected";
+            this.btnEditSelected.UseVisualStyleBackColor = true;
+            this.btnEditSelected.Click += new System.EventHandler(this.btnEditSelected_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1126, 871);
+            this.Controls.Add(this.btnAddDecorated);
+            this.Controls.Add(this.comboBoxCategory);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.dateTimePickerDueDate);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.comboBoxPriority);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnLoadFile);
             this.Controls.Add(this.btnSaveFile);
@@ -161,7 +261,7 @@
             this.Controls.Add(this.listBoxComplete);
             this.Controls.Add(this.listBoxIncomplete);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Todo List with Decorator Pattern";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,6 +280,14 @@
         private System.Windows.Forms.Button btnSaveFile;
         private System.Windows.Forms.Button btnLoadFile;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBoxPriority;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DateTimePicker dateTimePickerDueDate;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBoxCategory;
+        private System.Windows.Forms.Button btnAddDecorated;
+        private System.Windows.Forms.Button btnEditSelected;
     }
 }
 

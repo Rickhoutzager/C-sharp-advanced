@@ -33,11 +33,11 @@ namespace to_do_list
 
             listBoxIncomplete.DataSource = null;
             listBoxIncomplete.DataSource = incompleteItems;
-            listBoxIncomplete.DisplayMember = "Title";
+            listBoxIncomplete.DisplayMember = "ToString";
 
             listBoxComplete.DataSource = null;
             listBoxComplete.DataSource = completedItems;
-            listBoxComplete.DisplayMember = "Title";
+            listBoxComplete.DisplayMember = "ToString";
         }
 
         private void btnAdd_Click_1(object sender, EventArgs e)
@@ -151,6 +151,74 @@ namespace to_do_list
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnAddDecorated_Click(object sender, EventArgs e)
+        {
+            string newTitle = textBoxNewItem.Text.Trim();
+            if (!string.IsNullOrEmpty(newTitle))
+            {
+                // Get selected values from UI controls
+                string selectedPriority = comboBoxPriority.SelectedItem?.ToString() ?? "1 - Low";
+                int priority = int.Parse(selectedPriority.Split(' ')[0]);
+                
+                string selectedCategory = comboBoxCategory.SelectedItem?.ToString() ?? "General";
+                DateTime dueDate = dateTimePickerDueDate.Value;
+
+                // Create a todo item with decorators
+                var todoItem = new TodoItem
+                {
+                    Title = newTitle,
+                    Completed = false,
+                    Category = selectedCategory,
+                    Priority = priority,
+                    DueDate = dueDate
+                };
+
+                todoList.Add(todoItem);
+                TodoStorage.Instance.Save(todoList);
+                UpdateUI();
+                textBoxNewItem.Clear();
+            }
+        }
+
+        private void btnEditSelected_Click(object sender, EventArgs e)
+        {
+            TodoItem selectedItem = null;
+
+            // Check which list has the selected item
+            if (listBoxIncomplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
+            }
+            else if (listBoxComplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxComplete.SelectedItem;
+            }
+
+            if (selectedItem != null)
+            {
+                // Get selected values from UI controls
+                string selectedPriority = comboBoxPriority.SelectedItem?.ToString() ?? "1 - Low";
+                int priority = int.Parse(selectedPriority.Split(' ')[0]);
+                
+                string selectedCategory = comboBoxCategory.SelectedItem?.ToString() ?? "General";
+                DateTime dueDate = dateTimePickerDueDate.Value;
+
+                // Update the existing todo item with new decorator values
+                selectedItem.Title = textBoxNewItem.Text.Trim();
+                selectedItem.Category = selectedCategory;
+                selectedItem.Priority = priority;
+                selectedItem.DueDate = dueDate;
+
+                TodoStorage.Instance.Save(todoList);
+                UpdateUI();
+                textBoxNewItem.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Please select a todo item to edit.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
