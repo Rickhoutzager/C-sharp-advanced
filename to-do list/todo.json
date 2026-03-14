@@ -2,13 +2,13 @@
   {
     "Title": "hithere",
     "Completed": false,
-    "Category": "General",
-    "DueDate": null,
-    "Priority": 1
+    "Category": "Personal",
+    "DueDate": "2026-03-14T19:43:47.9077458+01:00",
+    "Priority": 2
   },
   {
     "Title": "test1",
-    "Completed": false,
+    "Completed": true,
     "Category": "General",
     "DueDate": null,
     "Priority": 1
@@ -19,5 +19,12 @@
     "Category": "Work",
     "DueDate": "2026-03-18T14:21:59.629",
     "Priority": 5
+  },
+  {
+    "Title": "eat vegetables",
+    "Completed": false,
+    "Category": "Personal",
+    "DueDate": "2026-03-18T19:47:17.575",
+    "Priority": 4
   }
 ]

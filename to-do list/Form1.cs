@@ -181,5 +181,96 @@ namespace to_do_list
                 textBoxNewItem.Clear();
             }
         }
+
+        private void btnEditSelected_Click(object sender, EventArgs e)
+        {
+            TodoItem selectedItem = null;
+
+            if (listBoxIncomplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
+            }
+            else if (listBoxComplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxComplete.SelectedItem;
+            }
+
+            if (selectedItem != null)
+            {
+                // Populate edit controls with selected item's data
+                textBoxEditTitle.Text = selectedItem.Title;
+                comboBoxEditPriority.SelectedItem = $"{selectedItem.Priority} - {(selectedItem.Priority == 1 ? "Low" : selectedItem.Priority == 2 ? "Medium" : selectedItem.Priority == 3 ? "High" : selectedItem.Priority == 4 ? "Very High" : "Urgent")}";
+                comboBoxEditCategory.SelectedItem = selectedItem.Category;
+                dateTimePickerEditDueDate.Value = selectedItem.DueDate ?? DateTime.Now;
+
+                // Update header to show which item is being edited
+                labelEditHeader.Text = $"Editing: {selectedItem.Title}";
+                labelEditHeader.ForeColor = System.Drawing.Color.Blue;
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to edit.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            TodoItem selectedItem = null;
+
+            if (listBoxIncomplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
+            }
+            else if (listBoxComplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxComplete.SelectedItem;
+            }
+
+            if (selectedItem != null)
+            {
+                string newTitle = textBoxEditTitle.Text.Trim();
+                if (string.IsNullOrEmpty(newTitle))
+                {
+                    MessageBox.Show("Title cannot be empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Get updated values from edit controls
+                string selectedPriority = comboBoxEditPriority.SelectedItem?.ToString() ?? "1 - Low";
+                int priority = int.Parse(selectedPriority.Split(' ')[0]);
+                
+                string selectedCategory = comboBoxEditCategory.SelectedItem?.ToString() ?? "General";
+                DateTime dueDate = dateTimePickerEditDueDate.Value;
+
+                // Update the selected item
+                selectedItem.Title = newTitle;
+                selectedItem.Category = selectedCategory;
+                selectedItem.Priority = priority;
+                selectedItem.DueDate = dueDate;
+
+                // Save changes and update UI
+                TodoStorage.Instance.Save(todoList);
+                UpdateUI();
+
+                // Clear edit controls and reset header
+                ClearEditControls();
+                
+                MessageBox.Show("Item updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No item selected to save changes.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void ClearEditControls()
+        {
+            textBoxEditTitle.Clear();
+            comboBoxEditPriority.SelectedIndex = 0;
+            comboBoxEditCategory.SelectedIndex = 0;
+            dateTimePickerEditDueDate.Value = DateTime.Now;
+            labelEditHeader.Text = "Select item to edit it";
+            labelEditHeader.ForeColor = System.Drawing.Color.Black;
+        }
     }
 }
