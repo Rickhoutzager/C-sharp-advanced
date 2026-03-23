@@ -13,12 +13,16 @@ namespace to_do_list
     public partial class Form1 : Form
     {
         List<TodoItem> todoList = new List<TodoItem>();
+        private TodoCommandManager commandManager = new TodoCommandManager();
 
         public Form1()
         {
             InitializeComponent();
             LoadTodoList();
             UpdateUI();
+            
+            // Set up command manager callbacks for UI updates
+            commandManager.AddCommandExecutedCallback(UpdateCommandUI);
         }
 
         void LoadTodoList()
@@ -59,18 +63,19 @@ namespace to_do_list
             if (listBoxIncomplete.SelectedItem != null)
             {
                 selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
-                selectedItem.Completed = true;
             }
             else if (listBoxComplete.SelectedItem != null)
             {
                 selectedItem = (TodoItem)listBoxComplete.SelectedItem;
-                selectedItem.Completed = false;
             }
 
             if (selectedItem != null)
             {
-                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
-                UpdateUI();
+                // Execute using Command pattern
+                var command = TodoCommandFactory.CreateToggleCommand(selectedItem);
+                commandManager.ExecuteCommand(command);
+                TodoStorage.Instance.Save(todoList);
+                UpdateUI(); // Refresh the UI to show the updated lists
             }
             listBoxIncomplete.ClearSelected();
             listBoxComplete.ClearSelected();
@@ -175,9 +180,10 @@ namespace to_do_list
                     DueDate = dueDate
                 };
 
-                todoList.Add(todoItem);
+                // Execute using Command pattern
+                var command = TodoCommandFactory.CreateAddCommand(todoList, todoItem);
+                commandManager.ExecuteCommand(command);
                 TodoStorage.Instance.Save(todoList);
-                UpdateUI();
                 textBoxNewItem.Clear();
             }
         }
@@ -242,15 +248,20 @@ namespace to_do_list
                 string selectedCategory = comboBoxEditCategory.SelectedItem?.ToString() ?? "General";
                 DateTime dueDate = dateTimePickerEditDueDate.Value;
 
-                // Update the selected item
-                selectedItem.Title = newTitle;
-                selectedItem.Category = selectedCategory;
-                selectedItem.Priority = priority;
-                selectedItem.DueDate = dueDate;
+                // Create updated item
+                var updatedItem = new TodoItem
+                {
+                    Title = newTitle,
+                    Category = selectedCategory,
+                    Priority = priority,
+                    DueDate = dueDate,
+                    Completed = selectedItem.Completed
+                };
 
-                // Save changes and update UI
+                // Execute using Command pattern
+                var command = TodoCommandFactory.CreateUpdateCommand(todoList, selectedItem, updatedItem);
+                commandManager.ExecuteCommand(command);
                 TodoStorage.Instance.Save(todoList);
-                UpdateUI();
 
                 // Clear edit controls and reset header
                 ClearEditControls();
@@ -271,6 +282,35 @@ namespace to_do_list
             dateTimePickerEditDueDate.Value = DateTime.Now;
             labelEditHeader.Text = "Select item to edit it";
             labelEditHeader.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void UpdateCommandUI()
+        {
+            labelUndoCount.Text = commandManager.UndoCount.ToString();
+            labelRedoCount.Text = commandManager.RedoCount.ToString();
+            
+            btnUndo.Enabled = commandManager.CanUndo;
+            btnRedo.Enabled = commandManager.CanRedo;
+        }
+
+        private void btnUndo_Click(object sender, EventArgs e)
+        {
+            if (commandManager.CanUndo)
+            {
+                commandManager.Undo();
+                UpdateUI();
+                UpdateCommandUI();
+            }
+        }
+
+        private void btnRedo_Click(object sender, EventArgs e)
+        {
+            if (commandManager.CanRedo)
+            {
+                commandManager.Redo();
+                UpdateUI();
+                UpdateCommandUI();
+            }
         }
     }
 }

@@ -57,6 +57,12 @@
             this.labelEditPriority = new System.Windows.Forms.Label();
             this.labelEditTitle = new System.Windows.Forms.Label();
             this.labelEditHeader = new System.Windows.Forms.Label();
+            this.btnUndo = new System.Windows.Forms.Button();
+            this.btnRedo = new System.Windows.Forms.Button();
+            this.labelUndo = new System.Windows.Forms.Label();
+            this.labelRedo = new System.Windows.Forms.Label();
+            this.labelUndoCount = new System.Windows.Forms.Label();
+            this.labelRedoCount = new System.Windows.Forms.Label();
             this.groupBoxEdit.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -249,6 +255,64 @@
             this.groupBoxEdit.TabStop = false;
             this.groupBoxEdit.Text = "Edit Selected Item";
             // 
+            // btnUndo
+            // 
+            this.btnUndo.Location = new System.Drawing.Point(68, 95);
+            this.btnUndo.Name = "btnUndo";
+            this.btnUndo.Size = new System.Drawing.Size(120, 40);
+            this.btnUndo.TabIndex = 18;
+            this.btnUndo.Text = "Undo";
+            this.btnUndo.UseVisualStyleBackColor = true;
+            this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
+            // 
+            // btnRedo
+            // 
+            this.btnRedo.Location = new System.Drawing.Point(210, 95);
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.Size = new System.Drawing.Size(120, 40);
+            this.btnRedo.TabIndex = 19;
+            this.btnRedo.Text = "Redo";
+            this.btnRedo.UseVisualStyleBackColor = true;
+            this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
+            // 
+            // labelUndo
+            // 
+            this.labelUndo.AutoSize = true;
+            this.labelUndo.Location = new System.Drawing.Point(65, 145);
+            this.labelUndo.Name = "labelUndo";
+            this.labelUndo.Size = new System.Drawing.Size(64, 25);
+            this.labelUndo.TabIndex = 20;
+            this.labelUndo.Text = "Undo:";
+            // 
+            // labelRedo
+            // 
+            this.labelRedo.AutoSize = true;
+            this.labelRedo.Location = new System.Drawing.Point(205, 145);
+            this.labelRedo.Name = "labelRedo";
+            this.labelRedo.Size = new System.Drawing.Size(67, 25);
+            this.labelRedo.TabIndex = 21;
+            this.labelRedo.Text = "Redo:";
+            // 
+            // labelUndoCount
+            // 
+            this.labelUndoCount.AutoSize = true;
+            this.labelUndoCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUndoCount.Location = new System.Drawing.Point(130, 145);
+            this.labelUndoCount.Name = "labelUndoCount";
+            this.labelUndoCount.Size = new System.Drawing.Size(23, 31);
+            this.labelUndoCount.TabIndex = 22;
+            this.labelUndoCount.Text = "0";
+            // 
+            // labelRedoCount
+            // 
+            this.labelRedoCount.AutoSize = true;
+            this.labelRedoCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRedoCount.Location = new System.Drawing.Point(275, 145);
+            this.labelRedoCount.Name = "labelRedoCount";
+            this.labelRedoCount.Size = new System.Drawing.Size(23, 31);
+            this.labelRedoCount.TabIndex = 23;
+            this.labelRedoCount.Text = "0";
+            // 
             // btnSaveChanges
             // 
             this.btnSaveChanges.Location = new System.Drawing.Point(180, 390);
@@ -382,6 +446,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBoxComplete);
             this.Controls.Add(this.listBoxIncomplete);
+            this.Controls.Add(this.btnUndo);
+            this.Controls.Add(this.btnRedo);
+            this.Controls.Add(this.labelUndo);
+            this.Controls.Add(this.labelRedo);
+            this.Controls.Add(this.labelUndoCount);
+            this.Controls.Add(this.labelRedoCount);
             this.Name = "Form1";
             this.Text = "Todo List with Decorator Pattern";
             this.groupBoxEdit.ResumeLayout(false);
@@ -413,6 +483,12 @@
         private System.Windows.Forms.GroupBox groupBoxEdit;
         private System.Windows.Forms.Button btnSaveChanges;
         private System.Windows.Forms.Button btnEditSelected;
+        private System.Windows.Forms.Button btnUndo;
+        private System.Windows.Forms.Button btnRedo;
+        private System.Windows.Forms.Label labelUndo;
+        private System.Windows.Forms.Label labelRedo;
+        private System.Windows.Forms.Label labelUndoCount;
+        private System.Windows.Forms.Label labelRedoCount;
         private System.Windows.Forms.DateTimePicker dateTimePickerEditDueDate;
         private System.Windows.Forms.ComboBox comboBoxEditCategory;
         private System.Windows.Forms.ComboBox comboBoxEditPriority;
