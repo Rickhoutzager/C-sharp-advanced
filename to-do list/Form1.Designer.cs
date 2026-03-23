@@ -136,7 +136,7 @@
             this.btnSaveFile.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnSaveFile.Size = new System.Drawing.Size(192, 52);
             this.btnSaveFile.TabIndex = 7;
-            this.btnSaveFile.Text = "Save";
+            this.btnSaveFile.Text = "Export Data";
             this.btnSaveFile.UseVisualStyleBackColor = true;
             this.btnSaveFile.Click += new System.EventHandler(this.btnSaveFile_Click_1);
             // 
@@ -146,7 +146,7 @@
             this.btnLoadFile.Name = "btnLoadFile";
             this.btnLoadFile.Size = new System.Drawing.Size(197, 48);
             this.btnLoadFile.TabIndex = 8;
-            this.btnLoadFile.Text = "Load";
+            this.btnLoadFile.Text = "Import Data";
             this.btnLoadFile.UseVisualStyleBackColor = true;
             this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click_1);
             // 
