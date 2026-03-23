@@ -58,7 +58,7 @@ namespace to_do_list
 
         private void btnToggleComplete_Click_1(object sender, EventArgs e)
         {
-            TodoItem selectedItem = null;
+            TodoItem? selectedItem = null;
 
             if (listBoxIncomplete.SelectedItem != null)
             {
@@ -190,7 +190,7 @@ namespace to_do_list
 
         private void btnEditSelected_Click(object sender, EventArgs e)
         {
-            TodoItem selectedItem = null;
+            TodoItem? selectedItem = null;
 
             if (listBoxIncomplete.SelectedItem != null)
             {
