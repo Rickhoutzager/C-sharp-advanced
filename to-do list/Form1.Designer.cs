@@ -28,437 +28,444 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBoxIncomplete = new System.Windows.Forms.ListBox();
-            this.listBoxComplete = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxNewItem = new System.Windows.Forms.TextBox();
-            this.btnToggleComplete = new System.Windows.Forms.Button();
-            this.btnSaveFile = new System.Windows.Forms.Button();
-            this.btnLoadFile = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.comboBoxPriority = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dateTimePickerDueDate = new System.Windows.Forms.DateTimePicker();
-            this.label7 = new System.Windows.Forms.Label();
-            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
-            this.btnAddDecorated = new System.Windows.Forms.Button();
-            this.groupBoxEdit = new System.Windows.Forms.GroupBox();
-            this.btnSaveChanges = new System.Windows.Forms.Button();
-            this.btnEditSelected = new System.Windows.Forms.Button();
-            this.dateTimePickerEditDueDate = new System.Windows.Forms.DateTimePicker();
-            this.comboBoxEditCategory = new System.Windows.Forms.ComboBox();
-            this.comboBoxEditPriority = new System.Windows.Forms.ComboBox();
-            this.textBoxEditTitle = new System.Windows.Forms.TextBox();
-            this.labelEditDueDate = new System.Windows.Forms.Label();
-            this.labelEditCategory = new System.Windows.Forms.Label();
-            this.labelEditPriority = new System.Windows.Forms.Label();
-            this.labelEditTitle = new System.Windows.Forms.Label();
-            this.labelEditHeader = new System.Windows.Forms.Label();
-            this.btnUndo = new System.Windows.Forms.Button();
-            this.btnRedo = new System.Windows.Forms.Button();
-            this.labelUndo = new System.Windows.Forms.Label();
-            this.labelRedo = new System.Windows.Forms.Label();
-            this.labelUndoCount = new System.Windows.Forms.Label();
-            this.labelRedoCount = new System.Windows.Forms.Label();
-            this.groupBoxEdit.SuspendLayout();
-            this.SuspendLayout();
+            listBoxIncomplete = new ListBox();
+            listBoxComplete = new ListBox();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            textBoxNewItem = new TextBox();
+            btnToggleComplete = new Button();
+            btnSaveFile = new Button();
+            btnLoadFile = new Button();
+            label4 = new Label();
+            label5 = new Label();
+            comboBoxPriority = new ComboBox();
+            label6 = new Label();
+            dateTimePickerDueDate = new DateTimePicker();
+            label7 = new Label();
+            comboBoxCategory = new ComboBox();
+            btnAddDecorated = new Button();
+            groupBoxEdit = new GroupBox();
+            btnSaveChanges = new Button();
+            btnEditSelected = new Button();
+            dateTimePickerEditDueDate = new DateTimePicker();
+            comboBoxEditCategory = new ComboBox();
+            comboBoxEditPriority = new ComboBox();
+            textBoxEditTitle = new TextBox();
+            labelEditDueDate = new Label();
+            labelEditCategory = new Label();
+            labelEditPriority = new Label();
+            labelEditTitle = new Label();
+            labelEditHeader = new Label();
+            btnUndo = new Button();
+            btnRedo = new Button();
+            labelUndo = new Label();
+            labelRedo = new Label();
+            labelUndoCount = new Label();
+            labelRedoCount = new Label();
+            label8 = new Label();
+            groupBoxEdit.SuspendLayout();
+            SuspendLayout();
             // 
             // listBoxIncomplete
             // 
-            this.listBoxIncomplete.FormattingEnabled = true;
-            this.listBoxIncomplete.ItemHeight = 25;
-            this.listBoxIncomplete.Location = new System.Drawing.Point(40, 200);
-            this.listBoxIncomplete.Name = "listBoxIncomplete";
-            this.listBoxIncomplete.Size = new System.Drawing.Size(319, 304);
-            this.listBoxIncomplete.TabIndex = 0;
-            this.listBoxIncomplete.SelectedIndexChanged += new System.EventHandler(this.listBoxIncomplete_SelectedIndexChanged);
+            listBoxIncomplete.FormattingEnabled = true;
+            listBoxIncomplete.Location = new Point(36, 163);
+            listBoxIncomplete.Margin = new Padding(3, 4, 3, 4);
+            listBoxIncomplete.Name = "listBoxIncomplete";
+            listBoxIncomplete.Size = new Size(550, 388);
+            listBoxIncomplete.TabIndex = 0;
+            listBoxIncomplete.SelectedIndexChanged += listBoxIncomplete_SelectedIndexChanged;
             // 
             // listBoxComplete
             // 
-            this.listBoxComplete.FormattingEnabled = true;
-            this.listBoxComplete.ItemHeight = 25;
-            this.listBoxComplete.Location = new System.Drawing.Point(416, 200);
-            this.listBoxComplete.Name = "listBoxComplete";
-            this.listBoxComplete.Size = new System.Drawing.Size(319, 304);
-            this.listBoxComplete.TabIndex = 1;
-            this.listBoxComplete.SelectedIndexChanged += new System.EventHandler(this.listBoxComplete_SelectedIndexChanged);
+            listBoxComplete.FormattingEnabled = true;
+            listBoxComplete.Location = new Point(626, 163);
+            listBoxComplete.Margin = new Padding(3, 4, 3, 4);
+            listBoxComplete.Name = "listBoxComplete";
+            listBoxComplete.Size = new Size(550, 388);
+            listBoxComplete.TabIndex = 1;
+            listBoxComplete.SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 0;
+            label1.Location = new Point(0, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(108, 29);
+            label1.TabIndex = 0;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 172);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(180, 25);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Incomplete Tasks";
+            label2.AutoSize = true;
+            label2.Location = new Point(36, 127);
+            label2.Name = "label2";
+            label2.Size = new Size(195, 32);
+            label2.TabIndex = 2;
+            label2.Text = "Incomplete Tasks";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(411, 172);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(179, 25);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Completed Tasks";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            label3.AutoSize = true;
+            label3.Location = new Point(620, 127);
+            label3.Name = "label3";
+            label3.Size = new Size(193, 32);
+            label3.TabIndex = 3;
+            label3.Text = "Completed Tasks";
+            label3.Click += label3_Click;
             // 
             // textBoxNewItem
             // 
-            this.textBoxNewItem.Location = new System.Drawing.Point(45, 621);
-            this.textBoxNewItem.Name = "textBoxNewItem";
-            this.textBoxNewItem.Size = new System.Drawing.Size(247, 31);
-            this.textBoxNewItem.TabIndex = 5;
+            textBoxNewItem.Location = new Point(154, 633);
+            textBoxNewItem.Margin = new Padding(3, 4, 3, 4);
+            textBoxNewItem.Name = "textBoxNewItem";
+            textBoxNewItem.Size = new Size(267, 39);
+            textBoxNewItem.TabIndex = 5;
             // 
             // btnToggleComplete
             // 
-            this.btnToggleComplete.Location = new System.Drawing.Point(512, 555);
-            this.btnToggleComplete.Name = "btnToggleComplete";
-            this.btnToggleComplete.Size = new System.Drawing.Size(223, 97);
-            this.btnToggleComplete.TabIndex = 6;
-            this.btnToggleComplete.Text = "Toggle Complete";
-            this.btnToggleComplete.UseVisualStyleBackColor = true;
-            this.btnToggleComplete.Click += new System.EventHandler(this.btnToggleComplete_Click_1);
+            btnToggleComplete.Location = new Point(479, 633);
+            btnToggleComplete.Margin = new Padding(3, 4, 3, 4);
+            btnToggleComplete.Name = "btnToggleComplete";
+            btnToggleComplete.Size = new Size(269, 51);
+            btnToggleComplete.TabIndex = 6;
+            btnToggleComplete.Text = "Toggle Complete";
+            btnToggleComplete.UseVisualStyleBackColor = true;
+            btnToggleComplete.Click += btnToggleComplete_Click_1;
             // 
             // btnSaveFile
             // 
-            this.btnSaveFile.Location = new System.Drawing.Point(68, 38);
-            this.btnSaveFile.Name = "btnSaveFile";
-            this.btnSaveFile.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnSaveFile.Size = new System.Drawing.Size(192, 52);
-            this.btnSaveFile.TabIndex = 7;
-            this.btnSaveFile.Text = "Export Data";
-            this.btnSaveFile.UseVisualStyleBackColor = true;
-            this.btnSaveFile.Click += new System.EventHandler(this.btnSaveFile_Click_1);
+            btnSaveFile.Location = new Point(12, 13);
+            btnSaveFile.Margin = new Padding(3, 4, 3, 4);
+            btnSaveFile.Name = "btnSaveFile";
+            btnSaveFile.RightToLeft = RightToLeft.No;
+            btnSaveFile.Size = new Size(154, 64);
+            btnSaveFile.TabIndex = 7;
+            btnSaveFile.Text = "Export Data";
+            btnSaveFile.UseVisualStyleBackColor = true;
+            btnSaveFile.Click += btnSaveFile_Click_1;
             // 
             // btnLoadFile
             // 
-            this.btnLoadFile.Location = new System.Drawing.Point(304, 41);
-            this.btnLoadFile.Name = "btnLoadFile";
-            this.btnLoadFile.Size = new System.Drawing.Size(197, 48);
-            this.btnLoadFile.TabIndex = 8;
-            this.btnLoadFile.Text = "Import Data";
-            this.btnLoadFile.UseVisualStyleBackColor = true;
-            this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click_1);
+            btnLoadFile.Location = new Point(174, 13);
+            btnLoadFile.Margin = new Padding(3, 4, 3, 4);
+            btnLoadFile.Name = "btnLoadFile";
+            btnLoadFile.Size = new Size(154, 61);
+            btnLoadFile.TabIndex = 8;
+            btnLoadFile.Text = "Import Data";
+            btnLoadFile.UseVisualStyleBackColor = true;
+            btnLoadFile.Click += btnLoadFile_Click_1;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 584);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(102, 25);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Add task:";
+            label4.AutoSize = true;
+            label4.Location = new Point(36, 591);
+            label4.Name = "label4";
+            label4.Size = new Size(111, 32);
+            label4.TabIndex = 9;
+            label4.Text = "Add task:";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(40, 669);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 25);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Priority:";
+            label5.AutoSize = true;
+            label5.Location = new Point(54, 680);
+            label5.Name = "label5";
+            label5.Size = new Size(94, 32);
+            label5.TabIndex = 10;
+            label5.Text = "Priority:";
             // 
             // comboBoxPriority
             // 
-            this.comboBoxPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPriority.FormattingEnabled = true;
-            this.comboBoxPriority.Items.AddRange(new object[] {
-            "1 - Low",
-            "2 - Medium",
-            "3 - High",
-            "4 - Very High",
-            "5 - Urgent"});
-            this.comboBoxPriority.Location = new System.Drawing.Point(130, 666);
-            this.comboBoxPriority.Name = "comboBoxPriority";
-            this.comboBoxPriority.Size = new System.Drawing.Size(162, 33);
-            this.comboBoxPriority.TabIndex = 11;
-            this.comboBoxPriority.SelectedIndex = 0;
+            comboBoxPriority.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxPriority.FormattingEnabled = true;
+            comboBoxPriority.Items.AddRange(new object[] { "1 - Low", "2 - Medium", "3 - High", "4 - Very High", "5 - Urgent" });
+            comboBoxPriority.Location = new Point(154, 680);
+            comboBoxPriority.Margin = new Padding(3, 4, 3, 4);
+            comboBoxPriority.Name = "comboBoxPriority";
+            comboBoxPriority.Size = new Size(267, 40);
+            comboBoxPriority.TabIndex = 11;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(320, 669);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(96, 25);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Due Date:";
+            label6.AutoSize = true;
+            label6.Location = new Point(27, 777);
+            label6.Name = "label6";
+            label6.Size = new Size(120, 32);
+            label6.TabIndex = 12;
+            label6.Text = "Due Date:";
             // 
             // dateTimePickerDueDate
             // 
-            this.dateTimePickerDueDate.Location = new System.Drawing.Point(422, 666);
-            this.dateTimePickerDueDate.Name = "dateTimePickerDueDate";
-            this.dateTimePickerDueDate.Size = new System.Drawing.Size(250, 31);
-            this.dateTimePickerDueDate.TabIndex = 13;
+            dateTimePickerDueDate.Location = new Point(154, 780);
+            dateTimePickerDueDate.Margin = new Padding(3, 4, 3, 4);
+            dateTimePickerDueDate.Name = "dateTimePickerDueDate";
+            dateTimePickerDueDate.Size = new Size(270, 39);
+            dateTimePickerDueDate.TabIndex = 13;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(40, 717);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(96, 25);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Category:";
+            label7.AutoSize = true;
+            label7.Location = new Point(32, 731);
+            label7.Name = "label7";
+            label7.Size = new Size(115, 32);
+            label7.TabIndex = 14;
+            label7.Text = "Category:";
             // 
             // comboBoxCategory
             // 
-            this.comboBoxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Items.AddRange(new object[] {
-            "General",
-            "Work",
-            "Personal",
-            "Shopping",
-            "Health"});
-            this.comboBoxCategory.Location = new System.Drawing.Point(142, 714);
-            this.comboBoxCategory.Name = "comboBoxCategory";
-            this.comboBoxCategory.Size = new System.Drawing.Size(150, 33);
-            this.comboBoxCategory.TabIndex = 15;
-            this.comboBoxCategory.SelectedIndex = 0;
+            comboBoxCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxCategory.FormattingEnabled = true;
+            comboBoxCategory.Items.AddRange(new object[] { "General", "Work", "Personal", "Shopping", "Health" });
+            comboBoxCategory.Location = new Point(154, 728);
+            comboBoxCategory.Margin = new Padding(3, 4, 3, 4);
+            comboBoxCategory.Name = "comboBoxCategory";
+            comboBoxCategory.Size = new Size(267, 40);
+            comboBoxCategory.TabIndex = 15;
             // 
             // btnAddDecorated
             // 
-            this.btnAddDecorated.Location = new System.Drawing.Point(304, 714);
-            this.btnAddDecorated.Name = "btnAddDecorated";
-            this.btnAddDecorated.Size = new System.Drawing.Size(150, 33);
-            this.btnAddDecorated.TabIndex = 16;
-            this.btnAddDecorated.Text = "Add Decorated";
-            this.btnAddDecorated.UseVisualStyleBackColor = true;
-            this.btnAddDecorated.Click += new System.EventHandler(this.btnAddDecorated_Click);
+            btnAddDecorated.Location = new Point(262, 842);
+            btnAddDecorated.Margin = new Padding(3, 4, 3, 4);
+            btnAddDecorated.Name = "btnAddDecorated";
+            btnAddDecorated.Size = new Size(162, 42);
+            btnAddDecorated.TabIndex = 16;
+            btnAddDecorated.Text = "Add Decorated";
+            btnAddDecorated.UseVisualStyleBackColor = true;
+            btnAddDecorated.Click += btnAddDecorated_Click;
             // 
             // groupBoxEdit
             // 
-            this.groupBoxEdit.Controls.Add(this.btnSaveChanges);
-            this.groupBoxEdit.Controls.Add(this.btnEditSelected);
-            this.groupBoxEdit.Controls.Add(this.dateTimePickerEditDueDate);
-            this.groupBoxEdit.Controls.Add(this.comboBoxEditCategory);
-            this.groupBoxEdit.Controls.Add(this.comboBoxEditPriority);
-            this.groupBoxEdit.Controls.Add(this.textBoxEditTitle);
-            this.groupBoxEdit.Controls.Add(this.labelEditDueDate);
-            this.groupBoxEdit.Controls.Add(this.labelEditCategory);
-            this.groupBoxEdit.Controls.Add(this.labelEditPriority);
-            this.groupBoxEdit.Controls.Add(this.labelEditTitle);
-            this.groupBoxEdit.Controls.Add(this.labelEditHeader);
-            this.groupBoxEdit.Location = new System.Drawing.Point(760, 200);
-            this.groupBoxEdit.Name = "groupBoxEdit";
-            this.groupBoxEdit.Size = new System.Drawing.Size(340, 450);
-            this.groupBoxEdit.TabIndex = 17;
-            this.groupBoxEdit.TabStop = false;
-            this.groupBoxEdit.Text = "Edit Selected Item";
-            // 
-            // btnUndo
-            // 
-            this.btnUndo.Location = new System.Drawing.Point(68, 95);
-            this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(120, 40);
-            this.btnUndo.TabIndex = 18;
-            this.btnUndo.Text = "Undo";
-            this.btnUndo.UseVisualStyleBackColor = true;
-            this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
-            // 
-            // btnRedo
-            // 
-            this.btnRedo.Location = new System.Drawing.Point(210, 95);
-            this.btnRedo.Name = "btnRedo";
-            this.btnRedo.Size = new System.Drawing.Size(120, 40);
-            this.btnRedo.TabIndex = 19;
-            this.btnRedo.Text = "Redo";
-            this.btnRedo.UseVisualStyleBackColor = true;
-            this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
-            // 
-            // labelUndo
-            // 
-            this.labelUndo.AutoSize = true;
-            this.labelUndo.Location = new System.Drawing.Point(65, 145);
-            this.labelUndo.Name = "labelUndo";
-            this.labelUndo.Size = new System.Drawing.Size(64, 25);
-            this.labelUndo.TabIndex = 20;
-            this.labelUndo.Text = "Undo:";
-            // 
-            // labelRedo
-            // 
-            this.labelRedo.AutoSize = true;
-            this.labelRedo.Location = new System.Drawing.Point(205, 145);
-            this.labelRedo.Name = "labelRedo";
-            this.labelRedo.Size = new System.Drawing.Size(67, 25);
-            this.labelRedo.TabIndex = 21;
-            this.labelRedo.Text = "Redo:";
-            // 
-            // labelUndoCount
-            // 
-            this.labelUndoCount.AutoSize = true;
-            this.labelUndoCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelUndoCount.Location = new System.Drawing.Point(130, 145);
-            this.labelUndoCount.Name = "labelUndoCount";
-            this.labelUndoCount.Size = new System.Drawing.Size(23, 31);
-            this.labelUndoCount.TabIndex = 22;
-            this.labelUndoCount.Text = "0";
-            // 
-            // labelRedoCount
-            // 
-            this.labelRedoCount.AutoSize = true;
-            this.labelRedoCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRedoCount.Location = new System.Drawing.Point(275, 145);
-            this.labelRedoCount.Name = "labelRedoCount";
-            this.labelRedoCount.Size = new System.Drawing.Size(23, 31);
-            this.labelRedoCount.TabIndex = 23;
-            this.labelRedoCount.Text = "0";
+            groupBoxEdit.Controls.Add(btnSaveChanges);
+            groupBoxEdit.Controls.Add(btnEditSelected);
+            groupBoxEdit.Controls.Add(dateTimePickerEditDueDate);
+            groupBoxEdit.Controls.Add(comboBoxEditCategory);
+            groupBoxEdit.Controls.Add(comboBoxEditPriority);
+            groupBoxEdit.Controls.Add(textBoxEditTitle);
+            groupBoxEdit.Controls.Add(labelEditDueDate);
+            groupBoxEdit.Controls.Add(labelEditCategory);
+            groupBoxEdit.Controls.Add(labelEditPriority);
+            groupBoxEdit.Controls.Add(labelEditTitle);
+            groupBoxEdit.Controls.Add(labelEditHeader);
+            groupBoxEdit.Location = new Point(819, 591);
+            groupBoxEdit.Margin = new Padding(3, 4, 3, 4);
+            groupBoxEdit.Name = "groupBoxEdit";
+            groupBoxEdit.Padding = new Padding(3, 4, 3, 4);
+            groupBoxEdit.Size = new Size(389, 511);
+            groupBoxEdit.TabIndex = 17;
+            groupBoxEdit.TabStop = false;
+            groupBoxEdit.Text = "Edit Selected Item";
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Location = new System.Drawing.Point(180, 390);
-            this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(130, 35);
-            this.btnSaveChanges.TabIndex = 21;
-            this.btnSaveChanges.Text = "Save Changes";
-            this.btnSaveChanges.UseVisualStyleBackColor = true;
-            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
+            btnSaveChanges.Location = new Point(195, 441);
+            btnSaveChanges.Margin = new Padding(3, 4, 3, 4);
+            btnSaveChanges.Name = "btnSaveChanges";
+            btnSaveChanges.Size = new Size(141, 45);
+            btnSaveChanges.TabIndex = 21;
+            btnSaveChanges.Text = "Save Changes";
+            btnSaveChanges.UseVisualStyleBackColor = true;
+            btnSaveChanges.Click += btnSaveChanges_Click;
             // 
             // btnEditSelected
             // 
-            this.btnEditSelected.Location = new System.Drawing.Point(30, 390);
-            this.btnEditSelected.Name = "btnEditSelected";
-            this.btnEditSelected.Size = new System.Drawing.Size(130, 35);
-            this.btnEditSelected.TabIndex = 20;
-            this.btnEditSelected.Text = "Edit Selected";
-            this.btnEditSelected.UseVisualStyleBackColor = true;
-            this.btnEditSelected.Click += new System.EventHandler(this.btnEditSelected_Click);
+            btnEditSelected.Location = new Point(32, 441);
+            btnEditSelected.Margin = new Padding(3, 4, 3, 4);
+            btnEditSelected.Name = "btnEditSelected";
+            btnEditSelected.Size = new Size(141, 45);
+            btnEditSelected.TabIndex = 20;
+            btnEditSelected.Text = "Edit Selected";
+            btnEditSelected.UseVisualStyleBackColor = true;
+            btnEditSelected.Click += btnEditSelected_Click;
             // 
             // dateTimePickerEditDueDate
             // 
-            this.dateTimePickerEditDueDate.Location = new System.Drawing.Point(130, 320);
-            this.dateTimePickerEditDueDate.Name = "dateTimePickerEditDueDate";
-            this.dateTimePickerEditDueDate.Size = new System.Drawing.Size(180, 31);
-            this.dateTimePickerEditDueDate.TabIndex = 19;
+            dateTimePickerEditDueDate.Location = new Point(162, 352);
+            dateTimePickerEditDueDate.Margin = new Padding(3, 4, 3, 4);
+            dateTimePickerEditDueDate.Name = "dateTimePickerEditDueDate";
+            dateTimePickerEditDueDate.Size = new Size(195, 39);
+            dateTimePickerEditDueDate.TabIndex = 19;
             // 
             // comboBoxEditCategory
             // 
-            this.comboBoxEditCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxEditCategory.FormattingEnabled = true;
-            this.comboBoxEditCategory.Items.AddRange(new object[] {
-            "General",
-            "Work",
-            "Personal",
-            "Shopping",
-            "Health"});
-            this.comboBoxEditCategory.Location = new System.Drawing.Point(130, 260);
-            this.comboBoxEditCategory.Name = "comboBoxEditCategory";
-            this.comboBoxEditCategory.Size = new System.Drawing.Size(180, 33);
-            this.comboBoxEditCategory.TabIndex = 18;
+            comboBoxEditCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxEditCategory.FormattingEnabled = true;
+            comboBoxEditCategory.Items.AddRange(new object[] { "General", "Work", "Personal", "Shopping", "Health" });
+            comboBoxEditCategory.Location = new Point(162, 275);
+            comboBoxEditCategory.Margin = new Padding(3, 4, 3, 4);
+            comboBoxEditCategory.Name = "comboBoxEditCategory";
+            comboBoxEditCategory.Size = new Size(195, 40);
+            comboBoxEditCategory.TabIndex = 18;
             // 
             // comboBoxEditPriority
             // 
-            this.comboBoxEditPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxEditPriority.FormattingEnabled = true;
-            this.comboBoxEditPriority.Items.AddRange(new object[] {
-            "1 - Low",
-            "2 - Medium",
-            "3 - High",
-            "4 - Very High",
-            "5 - Urgent"});
-            this.comboBoxEditPriority.Location = new System.Drawing.Point(130, 200);
-            this.comboBoxEditPriority.Name = "comboBoxEditPriority";
-            this.comboBoxEditPriority.Size = new System.Drawing.Size(180, 33);
-            this.comboBoxEditPriority.TabIndex = 17;
+            comboBoxEditPriority.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxEditPriority.FormattingEnabled = true;
+            comboBoxEditPriority.Items.AddRange(new object[] { "1 - Low", "2 - Medium", "3 - High", "4 - Very High", "5 - Urgent" });
+            comboBoxEditPriority.Location = new Point(162, 198);
+            comboBoxEditPriority.Margin = new Padding(3, 4, 3, 4);
+            comboBoxEditPriority.Name = "comboBoxEditPriority";
+            comboBoxEditPriority.Size = new Size(195, 40);
+            comboBoxEditPriority.TabIndex = 17;
             // 
             // textBoxEditTitle
             // 
-            this.textBoxEditTitle.Location = new System.Drawing.Point(130, 140);
-            this.textBoxEditTitle.Name = "textBoxEditTitle";
-            this.textBoxEditTitle.Size = new System.Drawing.Size(180, 31);
-            this.textBoxEditTitle.TabIndex = 16;
+            textBoxEditTitle.Location = new Point(162, 121);
+            textBoxEditTitle.Margin = new Padding(3, 4, 3, 4);
+            textBoxEditTitle.Name = "textBoxEditTitle";
+            textBoxEditTitle.Size = new Size(195, 39);
+            textBoxEditTitle.TabIndex = 16;
             // 
             // labelEditDueDate
             // 
-            this.labelEditDueDate.AutoSize = true;
-            this.labelEditDueDate.Location = new System.Drawing.Point(25, 325);
-            this.labelEditDueDate.Name = "labelEditDueDate";
-            this.labelEditDueDate.Size = new System.Drawing.Size(96, 25);
-            this.labelEditDueDate.TabIndex = 15;
-            this.labelEditDueDate.Text = "Due Date:";
+            labelEditDueDate.AutoSize = true;
+            labelEditDueDate.Location = new Point(27, 358);
+            labelEditDueDate.Name = "labelEditDueDate";
+            labelEditDueDate.Size = new Size(120, 32);
+            labelEditDueDate.TabIndex = 15;
+            labelEditDueDate.Text = "Due Date:";
             // 
             // labelEditCategory
             // 
-            this.labelEditCategory.AutoSize = true;
-            this.labelEditCategory.Location = new System.Drawing.Point(25, 265);
-            this.labelEditCategory.Name = "labelEditCategory";
-            this.labelEditCategory.Size = new System.Drawing.Size(96, 25);
-            this.labelEditCategory.TabIndex = 14;
-            this.labelEditCategory.Text = "Category:";
+            labelEditCategory.AutoSize = true;
+            labelEditCategory.Location = new Point(27, 281);
+            labelEditCategory.Name = "labelEditCategory";
+            labelEditCategory.Size = new Size(115, 32);
+            labelEditCategory.TabIndex = 14;
+            labelEditCategory.Text = "Category:";
             // 
             // labelEditPriority
             // 
-            this.labelEditPriority.AutoSize = true;
-            this.labelEditPriority.Location = new System.Drawing.Point(25, 205);
-            this.labelEditPriority.Name = "labelEditPriority";
-            this.labelEditPriority.Size = new System.Drawing.Size(84, 25);
-            this.labelEditPriority.TabIndex = 13;
-            this.labelEditPriority.Text = "Priority:";
+            labelEditPriority.AutoSize = true;
+            labelEditPriority.Location = new Point(27, 204);
+            labelEditPriority.Name = "labelEditPriority";
+            labelEditPriority.Size = new Size(94, 32);
+            labelEditPriority.TabIndex = 13;
+            labelEditPriority.Text = "Priority:";
             // 
             // labelEditTitle
             // 
-            this.labelEditTitle.AutoSize = true;
-            this.labelEditTitle.Location = new System.Drawing.Point(25, 145);
-            this.labelEditTitle.Name = "labelEditTitle";
-            this.labelEditTitle.Size = new System.Drawing.Size(53, 25);
-            this.labelEditTitle.TabIndex = 12;
-            this.labelEditTitle.Text = "Title:";
+            labelEditTitle.AutoSize = true;
+            labelEditTitle.Location = new Point(27, 128);
+            labelEditTitle.Name = "labelEditTitle";
+            labelEditTitle.Size = new Size(65, 32);
+            labelEditTitle.TabIndex = 12;
+            labelEditTitle.Text = "Name:";
             // 
             // labelEditHeader
             // 
-            this.labelEditHeader.AutoSize = true;
-            this.labelEditHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelEditHeader.Location = new System.Drawing.Point(25, 50);
-            this.labelEditHeader.Name = "labelEditHeader";
-            this.labelEditHeader.Size = new System.Drawing.Size(280, 31);
-            this.labelEditHeader.TabIndex = 11;
-            this.labelEditHeader.Text = "Select item to edit it";
+            labelEditHeader.AutoSize = true;
+            labelEditHeader.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelEditHeader.Location = new Point(27, 64);
+            labelEditHeader.Name = "labelEditHeader";
+            labelEditHeader.Size = new Size(272, 31);
+            labelEditHeader.TabIndex = 11;
+            labelEditHeader.Text = "Select item to edit it";
+            // 
+            // btnUndo
+            // 
+            btnUndo.Location = new Point(337, 13);
+            btnUndo.Margin = new Padding(3, 4, 3, 4);
+            btnUndo.Name = "btnUndo";
+            btnUndo.Size = new Size(154, 61);
+            btnUndo.TabIndex = 18;
+            btnUndo.Text = "Undo";
+            btnUndo.UseVisualStyleBackColor = true;
+            btnUndo.Click += btnUndo_Click;
+            // 
+            // btnRedo
+            // 
+            btnRedo.Location = new Point(497, 13);
+            btnRedo.Margin = new Padding(3, 4, 3, 4);
+            btnRedo.Name = "btnRedo";
+            btnRedo.Size = new Size(154, 61);
+            btnRedo.TabIndex = 19;
+            btnRedo.Text = "Redo";
+            btnRedo.UseVisualStyleBackColor = true;
+            btnRedo.Click += btnRedo_Click;
+            // 
+            // labelUndo
+            // 
+            labelUndo.AutoSize = true;
+            labelUndo.Location = new Point(373, 78);
+            labelUndo.Name = "labelUndo";
+            labelUndo.Size = new Size(77, 32);
+            labelUndo.TabIndex = 20;
+            labelUndo.Text = "Undo:";
+            // 
+            // labelRedo
+            // 
+            labelRedo.AutoSize = true;
+            labelRedo.Location = new Point(523, 78);
+            labelRedo.Name = "labelRedo";
+            labelRedo.Size = new Size(73, 32);
+            labelRedo.TabIndex = 21;
+            labelRedo.Text = "Redo:";
+            // 
+            // labelUndoCount
+            // 
+            labelUndoCount.AutoSize = true;
+            labelUndoCount.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelUndoCount.Location = new Point(444, 78);
+            labelUndoCount.Name = "labelUndoCount";
+            labelUndoCount.Size = new Size(30, 31);
+            labelUndoCount.TabIndex = 22;
+            labelUndoCount.Text = "0";
+            // 
+            // labelRedoCount
+            // 
+            labelRedoCount.AutoSize = true;
+            labelRedoCount.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelRedoCount.Location = new Point(599, 78);
+            labelRedoCount.Name = "labelRedoCount";
+            labelRedoCount.Size = new Size(30, 31);
+            labelRedoCount.TabIndex = 23;
+            labelRedoCount.Text = "0";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(65, 636);
+            label8.Name = "label8";
+            label8.Size = new Size(83, 32);
+            label8.TabIndex = 24;
+            label8.Text = "Name:";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1126, 871);
-            this.Controls.Add(this.groupBoxEdit);
-            this.Controls.Add(this.btnAddDecorated);
-            this.Controls.Add(this.comboBoxCategory);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.dateTimePickerDueDate);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.comboBoxPriority);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnLoadFile);
-            this.Controls.Add(this.btnSaveFile);
-            this.Controls.Add(this.btnToggleComplete);
-            this.Controls.Add(this.textBoxNewItem);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.listBoxComplete);
-            this.Controls.Add(this.listBoxIncomplete);
-            this.Controls.Add(this.btnUndo);
-            this.Controls.Add(this.btnRedo);
-            this.Controls.Add(this.labelUndo);
-            this.Controls.Add(this.labelRedo);
-            this.Controls.Add(this.labelUndoCount);
-            this.Controls.Add(this.labelRedoCount);
-            this.Name = "Form1";
-            this.Text = "Todo List with Decorator Pattern";
-            this.groupBoxEdit.ResumeLayout(false);
-            this.groupBoxEdit.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1220, 1115);
+            Controls.Add(label8);
+            Controls.Add(groupBoxEdit);
+            Controls.Add(btnAddDecorated);
+            Controls.Add(comboBoxCategory);
+            Controls.Add(label7);
+            Controls.Add(dateTimePickerDueDate);
+            Controls.Add(label6);
+            Controls.Add(comboBoxPriority);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(btnLoadFile);
+            Controls.Add(btnSaveFile);
+            Controls.Add(btnToggleComplete);
+            Controls.Add(textBoxNewItem);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(listBoxComplete);
+            Controls.Add(listBoxIncomplete);
+            Controls.Add(btnUndo);
+            Controls.Add(btnRedo);
+            Controls.Add(labelUndo);
+            Controls.Add(labelRedo);
+            Controls.Add(labelUndoCount);
+            Controls.Add(labelRedoCount);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "Form1";
+            Text = "Todo List with Decorator Pattern";
+            groupBoxEdit.ResumeLayout(false);
+            groupBoxEdit.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -498,6 +505,7 @@
         private System.Windows.Forms.Label labelEditPriority;
         private System.Windows.Forms.Label labelEditTitle;
         private System.Windows.Forms.Label labelEditHeader;
+        private Label label8;
     }
 }
 
