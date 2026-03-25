@@ -63,27 +63,36 @@
             labelRedo = new Label();
             labelUndoCount = new Label();
             labelRedoCount = new Label();
-            label8 = new Label();
+            btnCreateProject = new Button();
+            btnAddToProject = new Button();
+            btnCompleteProject = new Button();
+            comboBoxProjects = new ComboBox();
+            labelProjects = new Label();
+            groupBoxProjects = new GroupBox();
+            btnShowProjectContents = new Button();
+            groupBox1 = new GroupBox();
             groupBoxEdit.SuspendLayout();
+            groupBoxProjects.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // listBoxIncomplete
             // 
             listBoxIncomplete.FormattingEnabled = true;
-            listBoxIncomplete.Location = new Point(36, 163);
+            listBoxIncomplete.Location = new Point(25, 262);
             listBoxIncomplete.Margin = new Padding(3, 4, 3, 4);
             listBoxIncomplete.Name = "listBoxIncomplete";
-            listBoxIncomplete.Size = new Size(550, 388);
+            listBoxIncomplete.Size = new Size(578, 388);
             listBoxIncomplete.TabIndex = 0;
             listBoxIncomplete.SelectedIndexChanged += listBoxIncomplete_SelectedIndexChanged;
             // 
             // listBoxComplete
             // 
             listBoxComplete.FormattingEnabled = true;
-            listBoxComplete.Location = new Point(626, 163);
+            listBoxComplete.Location = new Point(614, 262);
             listBoxComplete.Margin = new Padding(3, 4, 3, 4);
             listBoxComplete.Name = "listBoxComplete";
-            listBoxComplete.Size = new Size(550, 388);
+            listBoxComplete.Size = new Size(578, 388);
             listBoxComplete.TabIndex = 1;
             listBoxComplete.SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
             // 
@@ -97,7 +106,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(36, 127);
+            label2.Location = new Point(25, 226);
             label2.Name = "label2";
             label2.Size = new Size(195, 32);
             label2.TabIndex = 2;
@@ -106,7 +115,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(620, 127);
+            label3.Location = new Point(608, 226);
             label3.Name = "label3";
             label3.Size = new Size(193, 32);
             label3.TabIndex = 3;
@@ -115,18 +124,18 @@
             // 
             // textBoxNewItem
             // 
-            textBoxNewItem.Location = new Point(154, 633);
+            textBoxNewItem.Location = new Point(150, 107);
             textBoxNewItem.Margin = new Padding(3, 4, 3, 4);
             textBoxNewItem.Name = "textBoxNewItem";
-            textBoxNewItem.Size = new Size(267, 39);
+            textBoxNewItem.Size = new Size(195, 39);
             textBoxNewItem.TabIndex = 5;
             // 
             // btnToggleComplete
             // 
-            btnToggleComplete.Location = new Point(479, 633);
+            btnToggleComplete.Location = new Point(872, 13);
             btnToggleComplete.Margin = new Padding(3, 4, 3, 4);
             btnToggleComplete.Name = "btnToggleComplete";
-            btnToggleComplete.Size = new Size(269, 51);
+            btnToggleComplete.Size = new Size(242, 67);
             btnToggleComplete.TabIndex = 6;
             btnToggleComplete.Text = "Toggle Complete";
             btnToggleComplete.UseVisualStyleBackColor = true;
@@ -138,36 +147,36 @@
             btnSaveFile.Margin = new Padding(3, 4, 3, 4);
             btnSaveFile.Name = "btnSaveFile";
             btnSaveFile.RightToLeft = RightToLeft.No;
-            btnSaveFile.Size = new Size(154, 64);
+            btnSaveFile.Size = new Size(208, 67);
             btnSaveFile.TabIndex = 7;
-            btnSaveFile.Text = "Export Data";
+            btnSaveFile.Text = "Save";
             btnSaveFile.UseVisualStyleBackColor = true;
             btnSaveFile.Click += btnSaveFile_Click_1;
             // 
             // btnLoadFile
             // 
-            btnLoadFile.Location = new Point(174, 13);
+            btnLoadFile.Location = new Point(226, 13);
             btnLoadFile.Margin = new Padding(3, 4, 3, 4);
             btnLoadFile.Name = "btnLoadFile";
-            btnLoadFile.Size = new Size(154, 61);
+            btnLoadFile.Size = new Size(208, 67);
             btnLoadFile.TabIndex = 8;
-            btnLoadFile.Text = "Import Data";
+            btnLoadFile.Text = "Load";
             btnLoadFile.UseVisualStyleBackColor = true;
             btnLoadFile.Click += btnLoadFile_Click_1;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(36, 591);
+            label4.Location = new Point(31, 114);
             label4.Name = "label4";
-            label4.Size = new Size(111, 32);
+            label4.Size = new Size(65, 32);
             label4.TabIndex = 9;
-            label4.Text = "Add task:";
+            label4.Text = "Title:";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(54, 680);
+            label5.Location = new Point(27, 190);
             label5.Name = "label5";
             label5.Size = new Size(94, 32);
             label5.TabIndex = 10;
@@ -178,16 +187,16 @@
             comboBoxPriority.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxPriority.FormattingEnabled = true;
             comboBoxPriority.Items.AddRange(new object[] { "1 - Low", "2 - Medium", "3 - High", "4 - Very High", "5 - Urgent" });
-            comboBoxPriority.Location = new Point(154, 680);
+            comboBoxPriority.Location = new Point(150, 187);
             comboBoxPriority.Margin = new Padding(3, 4, 3, 4);
             comboBoxPriority.Name = "comboBoxPriority";
-            comboBoxPriority.Size = new Size(267, 40);
+            comboBoxPriority.Size = new Size(195, 40);
             comboBoxPriority.TabIndex = 11;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(27, 777);
+            label6.Location = new Point(27, 345);
             label6.Name = "label6";
             label6.Size = new Size(120, 32);
             label6.TabIndex = 12;
@@ -195,16 +204,16 @@
             // 
             // dateTimePickerDueDate
             // 
-            dateTimePickerDueDate.Location = new Point(154, 780);
+            dateTimePickerDueDate.Location = new Point(150, 337);
             dateTimePickerDueDate.Margin = new Padding(3, 4, 3, 4);
             dateTimePickerDueDate.Name = "dateTimePickerDueDate";
-            dateTimePickerDueDate.Size = new Size(270, 39);
+            dateTimePickerDueDate.Size = new Size(195, 39);
             dateTimePickerDueDate.TabIndex = 13;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(32, 731);
+            label7.Location = new Point(27, 264);
             label7.Name = "label7";
             label7.Size = new Size(115, 32);
             label7.TabIndex = 14;
@@ -215,15 +224,15 @@
             comboBoxCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxCategory.FormattingEnabled = true;
             comboBoxCategory.Items.AddRange(new object[] { "General", "Work", "Personal", "Shopping", "Health" });
-            comboBoxCategory.Location = new Point(154, 728);
+            comboBoxCategory.Location = new Point(150, 267);
             comboBoxCategory.Margin = new Padding(3, 4, 3, 4);
             comboBoxCategory.Name = "comboBoxCategory";
-            comboBoxCategory.Size = new Size(267, 40);
+            comboBoxCategory.Size = new Size(195, 40);
             comboBoxCategory.TabIndex = 15;
             // 
             // btnAddDecorated
             // 
-            btnAddDecorated.Location = new Point(262, 842);
+            btnAddDecorated.Location = new Point(77, 428);
             btnAddDecorated.Margin = new Padding(3, 4, 3, 4);
             btnAddDecorated.Name = "btnAddDecorated";
             btnAddDecorated.Size = new Size(162, 42);
@@ -245,18 +254,18 @@
             groupBoxEdit.Controls.Add(labelEditPriority);
             groupBoxEdit.Controls.Add(labelEditTitle);
             groupBoxEdit.Controls.Add(labelEditHeader);
-            groupBoxEdit.Location = new Point(819, 591);
+            groupBoxEdit.Location = new Point(840, 713);
             groupBoxEdit.Margin = new Padding(3, 4, 3, 4);
             groupBoxEdit.Name = "groupBoxEdit";
             groupBoxEdit.Padding = new Padding(3, 4, 3, 4);
-            groupBoxEdit.Size = new Size(389, 511);
+            groupBoxEdit.Size = new Size(368, 490);
             groupBoxEdit.TabIndex = 17;
             groupBoxEdit.TabStop = false;
             groupBoxEdit.Text = "Edit Selected Item";
             // 
             // btnSaveChanges
             // 
-            btnSaveChanges.Location = new Point(195, 441);
+            btnSaveChanges.Location = new Point(195, 427);
             btnSaveChanges.Margin = new Padding(3, 4, 3, 4);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.Size = new Size(141, 45);
@@ -267,7 +276,7 @@
             // 
             // btnEditSelected
             // 
-            btnEditSelected.Location = new Point(32, 441);
+            btnEditSelected.Location = new Point(32, 427);
             btnEditSelected.Margin = new Padding(3, 4, 3, 4);
             btnEditSelected.Name = "btnEditSelected";
             btnEditSelected.Size = new Size(141, 45);
@@ -278,7 +287,7 @@
             // 
             // dateTimePickerEditDueDate
             // 
-            dateTimePickerEditDueDate.Location = new Point(162, 352);
+            dateTimePickerEditDueDate.Location = new Point(141, 338);
             dateTimePickerEditDueDate.Margin = new Padding(3, 4, 3, 4);
             dateTimePickerEditDueDate.Name = "dateTimePickerEditDueDate";
             dateTimePickerEditDueDate.Size = new Size(195, 39);
@@ -289,7 +298,7 @@
             comboBoxEditCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEditCategory.FormattingEnabled = true;
             comboBoxEditCategory.Items.AddRange(new object[] { "General", "Work", "Personal", "Shopping", "Health" });
-            comboBoxEditCategory.Location = new Point(162, 275);
+            comboBoxEditCategory.Location = new Point(141, 261);
             comboBoxEditCategory.Margin = new Padding(3, 4, 3, 4);
             comboBoxEditCategory.Name = "comboBoxEditCategory";
             comboBoxEditCategory.Size = new Size(195, 40);
@@ -300,7 +309,7 @@
             comboBoxEditPriority.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEditPriority.FormattingEnabled = true;
             comboBoxEditPriority.Items.AddRange(new object[] { "1 - Low", "2 - Medium", "3 - High", "4 - Very High", "5 - Urgent" });
-            comboBoxEditPriority.Location = new Point(162, 198);
+            comboBoxEditPriority.Location = new Point(141, 184);
             comboBoxEditPriority.Margin = new Padding(3, 4, 3, 4);
             comboBoxEditPriority.Name = "comboBoxEditPriority";
             comboBoxEditPriority.Size = new Size(195, 40);
@@ -308,7 +317,7 @@
             // 
             // textBoxEditTitle
             // 
-            textBoxEditTitle.Location = new Point(162, 121);
+            textBoxEditTitle.Location = new Point(141, 107);
             textBoxEditTitle.Margin = new Padding(3, 4, 3, 4);
             textBoxEditTitle.Name = "textBoxEditTitle";
             textBoxEditTitle.Size = new Size(195, 39);
@@ -317,7 +326,7 @@
             // labelEditDueDate
             // 
             labelEditDueDate.AutoSize = true;
-            labelEditDueDate.Location = new Point(27, 358);
+            labelEditDueDate.Location = new Point(27, 344);
             labelEditDueDate.Name = "labelEditDueDate";
             labelEditDueDate.Size = new Size(120, 32);
             labelEditDueDate.TabIndex = 15;
@@ -326,7 +335,7 @@
             // labelEditCategory
             // 
             labelEditCategory.AutoSize = true;
-            labelEditCategory.Location = new Point(27, 281);
+            labelEditCategory.Location = new Point(27, 267);
             labelEditCategory.Name = "labelEditCategory";
             labelEditCategory.Size = new Size(115, 32);
             labelEditCategory.TabIndex = 14;
@@ -335,7 +344,7 @@
             // labelEditPriority
             // 
             labelEditPriority.AutoSize = true;
-            labelEditPriority.Location = new Point(27, 204);
+            labelEditPriority.Location = new Point(27, 190);
             labelEditPriority.Name = "labelEditPriority";
             labelEditPriority.Size = new Size(94, 32);
             labelEditPriority.TabIndex = 13;
@@ -344,11 +353,11 @@
             // labelEditTitle
             // 
             labelEditTitle.AutoSize = true;
-            labelEditTitle.Location = new Point(27, 128);
+            labelEditTitle.Location = new Point(27, 114);
             labelEditTitle.Name = "labelEditTitle";
             labelEditTitle.Size = new Size(65, 32);
             labelEditTitle.TabIndex = 12;
-            labelEditTitle.Text = "Name:";
+            labelEditTitle.Text = "Title:";
             // 
             // labelEditHeader
             // 
@@ -362,10 +371,10 @@
             // 
             // btnUndo
             // 
-            btnUndo.Location = new Point(337, 13);
+            btnUndo.Location = new Point(440, 13);
             btnUndo.Margin = new Padding(3, 4, 3, 4);
             btnUndo.Name = "btnUndo";
-            btnUndo.Size = new Size(154, 61);
+            btnUndo.Size = new Size(208, 67);
             btnUndo.TabIndex = 18;
             btnUndo.Text = "Undo";
             btnUndo.UseVisualStyleBackColor = true;
@@ -373,10 +382,10 @@
             // 
             // btnRedo
             // 
-            btnRedo.Location = new Point(497, 13);
+            btnRedo.Location = new Point(654, 13);
             btnRedo.Margin = new Padding(3, 4, 3, 4);
             btnRedo.Name = "btnRedo";
-            btnRedo.Size = new Size(154, 61);
+            btnRedo.Size = new Size(208, 67);
             btnRedo.TabIndex = 19;
             btnRedo.Text = "Redo";
             btnRedo.UseVisualStyleBackColor = true;
@@ -385,7 +394,7 @@
             // labelUndo
             // 
             labelUndo.AutoSize = true;
-            labelUndo.Location = new Point(373, 78);
+            labelUndo.Location = new Point(501, 84);
             labelUndo.Name = "labelUndo";
             labelUndo.Size = new Size(77, 32);
             labelUndo.TabIndex = 20;
@@ -394,7 +403,7 @@
             // labelRedo
             // 
             labelRedo.AutoSize = true;
-            labelRedo.Location = new Point(523, 78);
+            labelRedo.Location = new Point(721, 84);
             labelRedo.Name = "labelRedo";
             labelRedo.Size = new Size(73, 32);
             labelRedo.TabIndex = 21;
@@ -404,7 +413,7 @@
             // 
             labelUndoCount.AutoSize = true;
             labelUndoCount.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelUndoCount.Location = new Point(444, 78);
+            labelUndoCount.Location = new Point(572, 84);
             labelUndoCount.Name = "labelUndoCount";
             labelUndoCount.Size = new Size(30, 31);
             labelUndoCount.TabIndex = 22;
@@ -414,56 +423,141 @@
             // 
             labelRedoCount.AutoSize = true;
             labelRedoCount.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelRedoCount.Location = new Point(599, 78);
+            labelRedoCount.Location = new Point(797, 84);
             labelRedoCount.Name = "labelRedoCount";
             labelRedoCount.Size = new Size(30, 31);
             labelRedoCount.TabIndex = 23;
             labelRedoCount.Text = "0";
             // 
-            // label8
+            // btnCreateProject
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(65, 636);
-            label8.Name = "label8";
-            label8.Size = new Size(83, 32);
-            label8.TabIndex = 24;
-            label8.Text = "Name:";
+            btnCreateProject.Location = new Point(25, 128);
+            btnCreateProject.Margin = new Padding(3, 4, 3, 4);
+            btnCreateProject.Name = "btnCreateProject";
+            btnCreateProject.Size = new Size(162, 45);
+            btnCreateProject.TabIndex = 24;
+            btnCreateProject.Text = "Create Project";
+            btnCreateProject.UseVisualStyleBackColor = true;
+            btnCreateProject.Click += btnCreateProject_Click;
+            // 
+            // btnAddToProject
+            // 
+            btnAddToProject.Location = new Point(198, 128);
+            btnAddToProject.Margin = new Padding(3, 4, 3, 4);
+            btnAddToProject.Name = "btnAddToProject";
+            btnAddToProject.Size = new Size(162, 45);
+            btnAddToProject.TabIndex = 25;
+            btnAddToProject.Text = "Add to Project";
+            btnAddToProject.UseVisualStyleBackColor = true;
+            btnAddToProject.Click += btnAddToProject_Click;
+            // 
+            // btnCompleteProject
+            // 
+            btnCompleteProject.Location = new Point(25, 186);
+            btnCompleteProject.Margin = new Padding(3, 4, 3, 4);
+            btnCompleteProject.Name = "btnCompleteProject";
+            btnCompleteProject.Size = new Size(336, 45);
+            btnCompleteProject.TabIndex = 26;
+            btnCompleteProject.Text = "Complete Project";
+            btnCompleteProject.UseVisualStyleBackColor = true;
+            btnCompleteProject.Click += btnCompleteProject_Click;
+            // 
+            // comboBoxProjects
+            // 
+            comboBoxProjects.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxProjects.FormattingEnabled = true;
+            comboBoxProjects.Location = new Point(25, 77);
+            comboBoxProjects.Margin = new Padding(3, 4, 3, 4);
+            comboBoxProjects.Name = "comboBoxProjects";
+            comboBoxProjects.Size = new Size(336, 40);
+            comboBoxProjects.TabIndex = 27;
+            // 
+            // labelProjects
+            // 
+            labelProjects.AutoSize = true;
+            labelProjects.Location = new Point(19, 45);
+            labelProjects.Name = "labelProjects";
+            labelProjects.Size = new Size(102, 32);
+            labelProjects.TabIndex = 28;
+            labelProjects.Text = "Projects:";
+            // 
+            // groupBoxProjects
+            // 
+            groupBoxProjects.Controls.Add(labelProjects);
+            groupBoxProjects.Controls.Add(comboBoxProjects);
+            groupBoxProjects.Controls.Add(btnCompleteProject);
+            groupBoxProjects.Controls.Add(btnAddToProject);
+            groupBoxProjects.Controls.Add(btnCreateProject);
+            groupBoxProjects.Controls.Add(btnShowProjectContents);
+            groupBoxProjects.Location = new Point(427, 713);
+            groupBoxProjects.Margin = new Padding(3, 4, 3, 4);
+            groupBoxProjects.Name = "groupBoxProjects";
+            groupBoxProjects.Padding = new Padding(3, 4, 3, 4);
+            groupBoxProjects.Size = new Size(400, 325);
+            groupBoxProjects.TabIndex = 29;
+            groupBoxProjects.TabStop = false;
+            groupBoxProjects.Text = "Project Management";
+            // 
+            // btnShowProjectContents
+            // 
+            btnShowProjectContents.Location = new Point(25, 243);
+            btnShowProjectContents.Margin = new Padding(3, 4, 3, 4);
+            btnShowProjectContents.Name = "btnShowProjectContents";
+            btnShowProjectContents.Size = new Size(336, 45);
+            btnShowProjectContents.TabIndex = 30;
+            btnShowProjectContents.Text = "Show Project Contents";
+            btnShowProjectContents.UseVisualStyleBackColor = true;
+            btnShowProjectContents.Click += btnShowProjectContents_Click;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(textBoxNewItem);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(comboBoxPriority);
+            groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(label7);
+            groupBox1.Controls.Add(comboBoxCategory);
+            groupBox1.Controls.Add(dateTimePickerDueDate);
+            groupBox1.Controls.Add(label6);
+            groupBox1.Controls.Add(btnAddDecorated);
+            groupBox1.Location = new Point(43, 713);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(368, 490);
+            groupBox1.TabIndex = 30;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Add New Item";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1220, 1115);
-            Controls.Add(label8);
+            ClientSize = new Size(1220, 1286);
+            Controls.Add(groupBox1);
+            Controls.Add(groupBoxProjects);
+            Controls.Add(labelRedoCount);
+            Controls.Add(labelUndoCount);
+            Controls.Add(labelRedo);
+            Controls.Add(labelUndo);
+            Controls.Add(btnRedo);
+            Controls.Add(btnUndo);
             Controls.Add(groupBoxEdit);
-            Controls.Add(btnAddDecorated);
-            Controls.Add(comboBoxCategory);
-            Controls.Add(label7);
-            Controls.Add(dateTimePickerDueDate);
-            Controls.Add(label6);
-            Controls.Add(comboBoxPriority);
-            Controls.Add(label5);
-            Controls.Add(label4);
             Controls.Add(btnLoadFile);
             Controls.Add(btnSaveFile);
             Controls.Add(btnToggleComplete);
-            Controls.Add(textBoxNewItem);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(listBoxComplete);
             Controls.Add(listBoxIncomplete);
-            Controls.Add(btnUndo);
-            Controls.Add(btnRedo);
-            Controls.Add(labelUndo);
-            Controls.Add(labelRedo);
-            Controls.Add(labelUndoCount);
-            Controls.Add(labelRedoCount);
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
-            Text = "Todo List with Decorator Pattern";
+            Text = "Todo List with Composite Pattern";
             groupBoxEdit.ResumeLayout(false);
             groupBoxEdit.PerformLayout();
+            groupBoxProjects.ResumeLayout(false);
+            groupBoxProjects.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -505,7 +599,13 @@
         private System.Windows.Forms.Label labelEditPriority;
         private System.Windows.Forms.Label labelEditTitle;
         private System.Windows.Forms.Label labelEditHeader;
-        private Label label8;
+        private System.Windows.Forms.Button btnCreateProject;
+        private System.Windows.Forms.Button btnAddToProject;
+        private System.Windows.Forms.Button btnCompleteProject;
+        private System.Windows.Forms.Button btnShowProjectContents;
+        private System.Windows.Forms.ComboBox comboBoxProjects;
+        private System.Windows.Forms.Label labelProjects;
+        private System.Windows.Forms.GroupBox groupBoxProjects;
+        private GroupBox groupBox1;
     }
 }
-

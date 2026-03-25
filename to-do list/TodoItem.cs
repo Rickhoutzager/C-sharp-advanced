@@ -11,28 +11,23 @@ namespace to_do_list
     {
         public string Title { get; set; }
         public bool Completed { get; set; }
+        public int Priority { get; set; }
         public string Category { get; set; }
         public DateTime? DueDate { get; set; }
-        public int Priority { get; set; }
+        
+        // Hierarchy support for Composite pattern
+        public TodoComponent ParentComponent { get; set; }
+        public List<TodoComponent> ChildComponents { get; set; } = new List<TodoComponent>();
 
         public TodoItem()
         {
-            Category = "General";
-            Priority = 1;
+            Priority = 2; // Default to Medium priority
+            Category = "General"; // Default category
         }
 
-        public TodoItem(string title, string category = "General", int priority = 1, DateTime? dueDate = null)
+        public override string ToString()
         {
-            Title = title;
-            Completed = false;
-            Category = category;
-            Priority = priority;
-            DueDate = dueDate;
-        }
-
-        // Method to create a decorated version of this todo item
-        public ITodoItemComponent CreateDecoratedItem()
-        {
+            // Create decorated description using the Decorator pattern
             ITodoItemComponent baseItem = new TodoItemBase(Title, Category);
             
             if (Priority > 1)
@@ -45,13 +40,52 @@ namespace to_do_list
                 baseItem = new DueDateDecorator(baseItem, DueDate.Value);
             }
             
-            return baseItem;
+            var status = Completed ? "✓" : "○";
+            return $"{status} {baseItem.GetDescription()}";
         }
 
-        public override string ToString()
+        // Helper method to create a TodoLeaf from this TodoItem
+        public TodoLeaf ToTodoLeaf()
         {
-            var decoratedItem = CreateDecoratedItem();
-            return decoratedItem.GetDescription();
+            return new TodoLeaf(this);
+        }
+
+        // Helper method to create a TodoComposite from this TodoItem
+        public TodoComposite ToTodoComposite()
+        {
+            return new TodoComposite(Title, Priority, Category, DueDate);
+        }
+
+        // Hierarchy management methods
+        public void AddChild(TodoComponent child)
+        {
+            ChildComponents.Add(child);
+            child.Parent = this.ToTodoLeaf(); // Set parent relationship
+        }
+
+        public void RemoveChild(TodoComponent child)
+        {
+            ChildComponents.Remove(child);
+            child.Parent = null;
+        }
+
+        public bool IsPartOfProject()
+        {
+            return ParentComponent != null;
+        }
+
+        public TodoComposite GetProject()
+        {
+            if (ParentComponent != null)
+            {
+                var current = ParentComponent;
+                while (current.Parent != null && !current.IsLeaf())
+                {
+                    current = current.Parent;
+                }
+                return current as TodoComposite;
+            }
+            return null;
         }
     }
 }

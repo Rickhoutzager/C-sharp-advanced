@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
 using to_do_list.Patterns;
+using Microsoft.VisualBasic;
 
 namespace to_do_list
 {
@@ -27,13 +28,42 @@ namespace to_do_list
 
         void LoadTodoList()
         {
-            todoList = TodoStorage.Instance.Load(); // Using Singleton pattern to load the todo list
+            todoList = TodoStorage.Instance.Load(); // Load todo items
+            projects = TodoStorage.Instance.LoadProjects(); // Load projects
+            UpdateProjectsComboBox(); // Update the projects dropdown
         }
 
         void UpdateUI()
         {
             var incompleteItems = todoList.Where(item => !item.Completed).ToList();
             var completedItems = todoList.Where(item => item.Completed).ToList();
+
+            // Add projects to the appropriate lists
+            foreach (var project in projects)
+            {
+                if (project.IsComplete)
+                {
+                    completedItems.Add(new TodoItem
+                    {
+                        Title = project.Title,
+                        Completed = true,
+                        Priority = project.Priority,
+                        Category = project.Category,
+                        DueDate = project.DueDate
+                    });
+                }
+                else
+                {
+                    incompleteItems.Add(new TodoItem
+                    {
+                        Title = project.Title,
+                        Completed = false,
+                        Priority = project.Priority,
+                        Category = project.Category,
+                        DueDate = project.DueDate
+                    });
+                }
+            }
 
             listBoxIncomplete.DataSource = null;
             listBoxIncomplete.DataSource = incompleteItems;
@@ -50,7 +80,7 @@ namespace to_do_list
             if (!string.IsNullOrEmpty(newTitle))
             {
                 todoList.Add(new TodoItem { Title = newTitle, Completed = false });
-                TodoStorage.Instance.Save(todoList); // Save the updated list using Singleton pattern
+                TodoStorage.Instance.Save(todoList, projects); // Save both todo items and projects
                 UpdateUI();
                 textBoxNewItem.Clear();
             }
@@ -74,7 +104,7 @@ namespace to_do_list
                 // Execute using Command pattern
                 var command = TodoCommandFactory.CreateToggleCommand(selectedItem);
                 commandManager.ExecuteCommand(command);
-                TodoStorage.Instance.Save(todoList);
+                TodoStorage.Instance.Save(todoList, projects);
                 UpdateUI(); // Refresh the UI to show the updated lists
             }
             listBoxIncomplete.ClearSelected();
@@ -183,7 +213,7 @@ namespace to_do_list
                 // Execute using Command pattern
                 var command = TodoCommandFactory.CreateAddCommand(todoList, todoItem);
                 commandManager.ExecuteCommand(command);
-                TodoStorage.Instance.Save(todoList);
+                TodoStorage.Instance.Save(todoList, projects);
                 textBoxNewItem.Clear();
             }
         }
@@ -261,7 +291,7 @@ namespace to_do_list
                 // Execute using Command pattern
                 var command = TodoCommandFactory.CreateUpdateCommand(todoList, selectedItem, updatedItem);
                 commandManager.ExecuteCommand(command);
-                TodoStorage.Instance.Save(todoList);
+                TodoStorage.Instance.Save(todoList, projects);
 
                 // Clear edit controls and reset header
                 ClearEditControls();
@@ -311,6 +341,120 @@ namespace to_do_list
                 UpdateUI();
                 UpdateCommandUI();
             }
+        }
+
+        // Composite Pattern - Project Management Methods
+        private List<TodoComposite> projects = new List<TodoComposite>();
+
+        private void btnCreateProject_Click(object sender, EventArgs e)
+        {
+            var projectName = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter project name:", "Create Project", "New Project");
+            
+            if (!string.IsNullOrEmpty(projectName))
+            {
+                var project = TodoCompositeFactory.CreateProject(projectName);
+                projects.Add(project);
+                UpdateProjectsComboBox();
+                MessageBox.Show($"Project '{projectName}' created successfully!", "Project Created", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnAddToProject_Click(object sender, EventArgs e)
+        {
+            if (comboBoxProjects.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a project first.", "No Project Selected", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (listBoxIncomplete.SelectedItem == null && listBoxComplete.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a todo item to add to the project.", "No Item Selected", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedProject = (TodoComposite)comboBoxProjects.SelectedItem;
+            TodoItem selectedItem = null;
+
+            if (listBoxIncomplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
+            }
+            else if (listBoxComplete.SelectedItem != null)
+            {
+                selectedItem = (TodoItem)listBoxComplete.SelectedItem;
+            }
+
+            if (selectedItem != null)
+            {
+                // Create a TodoLeaf from the selected item
+                var todoLeaf = selectedItem.ToTodoLeaf();
+                selectedProject.AddChild(todoLeaf);
+                
+                // Save both todo items and projects (keep todo item in main list)
+                TodoStorage.Instance.Save(todoList, projects);
+                UpdateUI();
+                
+                MessageBox.Show($"Added '{selectedItem.Title}' to project '{selectedProject.Title}'", 
+                    "Item Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnCompleteProject_Click(object sender, EventArgs e)
+        {
+            if (comboBoxProjects.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a project first.", "No Project Selected", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedProject = (TodoComposite)comboBoxProjects.SelectedItem;
+            
+            // Complete all tasks in the project
+            selectedProject.CompleteAll();
+            
+            // Save both todo items and projects
+            TodoStorage.Instance.Save(todoList, projects);
+            
+            // Update UI to reflect changes
+            UpdateUI();
+            
+            MessageBox.Show($"Project '{selectedProject.Title}' and all its tasks marked as complete!", 
+                "Project Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void UpdateProjectsComboBox()
+        {
+            comboBoxProjects.DataSource = null;
+            comboBoxProjects.DataSource = projects;
+            comboBoxProjects.DisplayMember = "Title";
+        }
+
+        private void btnShowProjectContents_Click(object sender, EventArgs e)
+        {
+            if (comboBoxProjects.SelectedItem != null)
+            {
+                var selectedProject = (TodoComposite)comboBoxProjects.SelectedItem;
+                DisplayProjectContents(selectedProject);
+            }
+            else
+            {
+                MessageBox.Show("Please select a project first.", "No Project Selected", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void DisplayProjectContents(TodoComposite project)
+        {
+            // Create a message box showing the hierarchical structure
+            var projectDisplay = project.Display(0);
+            MessageBox.Show(projectDisplay, $"Project: {project.Title}", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
