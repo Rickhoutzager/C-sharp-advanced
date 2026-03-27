@@ -33,7 +33,7 @@ namespace to_do_list
             UpdateProjectsComboBox(); // Update the projects dropdown
         }
 
-        void UpdateUI()
+        public void UpdateUI()
         {
             var incompleteItems = todoList.Where(item => !item.Completed).ToList();
             var completedItems = todoList.Where(item => item.Completed).ToList();
