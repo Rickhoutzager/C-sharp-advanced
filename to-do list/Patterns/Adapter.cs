@@ -38,9 +38,9 @@ namespace to_do_list.Patterns
             if (!File.Exists(filePath)) return new List<TodoItem>();
             var serializer = new XmlSerializer(typeof(List<TodoItem>));
             using var reader = new StreamReader(filePath);
-            return (List<TodoItem>)serializer.Deserialize(reader);
+            var result = serializer.Deserialize(reader);
+            return result as List<TodoItem> ?? new List<TodoItem>();
         }
-
         public void Save(string filePath, List<TodoItem> items)
         {
             var serializer = new XmlSerializer(typeof(List<TodoItem>));
