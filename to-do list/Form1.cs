@@ -15,6 +15,7 @@ namespace to_do_list
     {
         List<TodoItem> todoList = new List<TodoItem>();
         private TodoCommandManager commandManager = new TodoCommandManager();
+        private TodoListSelectionManager selectionManager = new TodoListSelectionManager();
 
         public Form1()
         {
@@ -24,6 +25,9 @@ namespace to_do_list
             
             // Set up command manager callbacks for UI updates
             commandManager.AddCommandExecutedCallback(UpdateCommandUI);
+            
+            // Initialize Observer Pattern
+            InitializeObserverPattern();
             
             // Initialize concurrency testing
             InitializeConcurrencyTesting();
@@ -109,10 +113,10 @@ namespace to_do_list
                 commandManager.ExecuteCommand(command);
                 TodoStorage.Instance.Save(todoList, projects);
                 UpdateUI(); // Refresh the UI to show the updated lists
+                
+                // Notify observers of selection change
+                selectionManager.ClearSelection();
             }
-            listBoxIncomplete.ClearSelected();
-            listBoxComplete.ClearSelected();
-            UpdateToggleButtonLabel();
         }
 
         private void listBoxIncomplete_SelectedIndexChanged(object sender, EventArgs e)
@@ -120,8 +124,13 @@ namespace to_do_list
             if (listBoxIncomplete.SelectedIndex != -1)
             {
                 listBoxComplete.ClearSelected();
+                var selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
+                selectionManager.UpdateSelection(selectedItem, true, false);
             }
-            UpdateToggleButtonLabel();
+            else
+            {
+                selectionManager.ClearSelection();
+            }
         }
 
         private void listBoxComplete_SelectedIndexChanged(object sender, EventArgs e)
@@ -129,25 +138,12 @@ namespace to_do_list
             if (listBoxComplete.SelectedIndex != -1)
             {
                 listBoxIncomplete.ClearSelected();
-            }
-            UpdateToggleButtonLabel();
-        }
-        void UpdateToggleButtonLabel()
-        {
-            if (listBoxIncomplete.SelectedItem != null)
-            {
-                btnToggleComplete.Text = "Mark as Complete";
-                btnToggleComplete.Enabled = true;
-            }
-            else if (listBoxComplete.SelectedItem != null)
-            {
-                btnToggleComplete.Text = "Mark as Incomplete";
-                btnToggleComplete.Enabled = true;
+                var selectedItem = (TodoItem)listBoxComplete.SelectedItem;
+                selectionManager.UpdateSelection(selectedItem, false, true);
             }
             else
             {
-                btnToggleComplete.Text = "Toggle Status";
-                btnToggleComplete.Enabled = false;
+                selectionManager.ClearSelection();
             }
         }
         private void btnSaveFile_Click_1(object sender, EventArgs e)
@@ -324,6 +320,21 @@ namespace to_do_list
             
             btnUndo.Enabled = commandManager.CanUndo;
             btnRedo.Enabled = commandManager.CanRedo;
+        }
+
+        private void InitializeObserverPattern()
+        {
+            // Create observers using the factory
+            var buttonTextObserver = UIObserverFactory.CreateButtonTextObserver(btnToggleComplete);
+            var commandUIObserver = UIObserverFactory.CreateCommandUIObserver(
+                labelUndoCount, labelRedoCount, btnUndo, btnRedo, commandManager);
+
+            // Attach observers to the selection manager
+            selectionManager.Attach(buttonTextObserver);
+            selectionManager.Attach(commandUIObserver);
+
+            // Initialize with current state
+            selectionManager.ClearSelection();
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
