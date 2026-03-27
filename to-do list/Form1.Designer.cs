@@ -527,11 +527,128 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Add New Item";
             // 
+            // groupBoxTesting
+            // 
+            groupBoxTesting = new GroupBox();
+            groupBoxTesting.Location = new Point(1220, 713);
+            groupBoxTesting.Name = "groupBoxTesting";
+            groupBoxTesting.Size = new Size(368, 490);
+            groupBoxTesting.TabIndex = 31;
+            groupBoxTesting.TabStop = false;
+            groupBoxTesting.Text = "Concurrency Testing";
+            
+            // 
+            // labelTestStatus
+            // 
+            labelTestStatus = new Label();
+            labelTestStatus.AutoSize = true;
+            labelTestStatus.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTestStatus.Location = new Point(27, 427);
+            labelTestStatus.Name = "labelTestStatus";
+            labelTestStatus.Size = new Size(164, 31);
+            labelTestStatus.TabIndex = 0;
+            labelTestStatus.Text = "Test Status: Ready";
+            
+            // 
+            // btnTestAsyncAwait
+            // 
+            btnTestAsyncAwait = new Button();
+            btnTestAsyncAwait.Location = new Point(25, 32);
+            btnTestAsyncAwait.Name = "btnTestAsyncAwait";
+            btnTestAsyncAwait.Size = new Size(320, 45);
+            btnTestAsyncAwait.TabIndex = 1;
+            btnTestAsyncAwait.Text = "Test Async/Await Pattern";
+            btnTestAsyncAwait.UseVisualStyleBackColor = true;
+            btnTestAsyncAwait.Click += btnTestAsyncAwait_Click;
+            
+            // 
+            // btnTestProducerConsumer
+            // 
+            btnTestProducerConsumer = new Button();
+            btnTestProducerConsumer.Location = new Point(25, 83);
+            btnTestProducerConsumer.Name = "btnTestProducerConsumer";
+            btnTestProducerConsumer.Size = new Size(320, 45);
+            btnTestProducerConsumer.TabIndex = 2;
+            btnTestProducerConsumer.Text = "Test Producer-Consumer Pattern";
+            btnTestProducerConsumer.UseVisualStyleBackColor = true;
+            btnTestProducerConsumer.Click += btnTestProducerConsumer_Click;
+            
+            // 
+            // btnTestReaderWriterLock
+            // 
+            btnTestReaderWriterLock = new Button();
+            btnTestReaderWriterLock.Location = new Point(25, 134);
+            btnTestReaderWriterLock.Name = "btnTestReaderWriterLock";
+            btnTestReaderWriterLock.Size = new Size(320, 45);
+            btnTestReaderWriterLock.TabIndex = 3;
+            btnTestReaderWriterLock.Text = "Test Reader-Writer Lock Pattern";
+            btnTestReaderWriterLock.UseVisualStyleBackColor = true;
+            btnTestReaderWriterLock.Click += btnTestReaderWriterLock_Click;
+            
+            // 
+            // btnTestBackgroundWorker
+            // 
+            btnTestBackgroundWorker = new Button();
+            btnTestBackgroundWorker.Location = new Point(25, 185);
+            btnTestBackgroundWorker.Name = "btnTestBackgroundWorker";
+            btnTestBackgroundWorker.Size = new Size(320, 45);
+            btnTestBackgroundWorker.TabIndex = 4;
+            btnTestBackgroundWorker.Text = "Test Background Worker Pattern";
+            btnTestBackgroundWorker.UseVisualStyleBackColor = true;
+            btnTestBackgroundWorker.Click += btnTestBackgroundWorker_Click;
+            
+            // 
+            // btnStressTest
+            // 
+            btnStressTest = new Button();
+            btnStressTest.Location = new Point(25, 236);
+            btnStressTest.Name = "btnStressTest";
+            btnStressTest.Size = new Size(320, 45);
+            btnStressTest.TabIndex = 5;
+            btnStressTest.Text = "Comprehensive Stress Test";
+            btnStressTest.UseVisualStyleBackColor = true;
+            btnStressTest.Click += btnStressTest_Click;
+            
+            // 
+            // btnBenchmark
+            // 
+            btnBenchmark = new Button();
+            btnBenchmark.Location = new Point(25, 287);
+            btnBenchmark.Name = "btnBenchmark";
+            btnBenchmark.Size = new Size(320, 45);
+            btnBenchmark.TabIndex = 6;
+            btnBenchmark.Text = "Performance Benchmark";
+            btnBenchmark.UseVisualStyleBackColor = true;
+            btnBenchmark.Click += btnBenchmark_Click;
+            
+            // 
+            // btnCleanup
+            // 
+            btnCleanup = new Button();
+            btnCleanup.Location = new Point(25, 338);
+            btnCleanup.Name = "btnCleanup";
+            btnCleanup.Size = new Size(320, 45);
+            btnCleanup.TabIndex = 7;
+            btnCleanup.Text = "Cleanup Resources";
+            btnCleanup.UseVisualStyleBackColor = true;
+            btnCleanup.Click += btnCleanup_Click;
+            
+            // Add controls to group box
+            groupBoxTesting.Controls.Add(labelTestStatus);
+            groupBoxTesting.Controls.Add(btnCleanup);
+            groupBoxTesting.Controls.Add(btnBenchmark);
+            groupBoxTesting.Controls.Add(btnStressTest);
+            groupBoxTesting.Controls.Add(btnTestBackgroundWorker);
+            groupBoxTesting.Controls.Add(btnTestReaderWriterLock);
+            groupBoxTesting.Controls.Add(btnTestProducerConsumer);
+            groupBoxTesting.Controls.Add(btnTestAsyncAwait);
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1220, 1286);
+            ClientSize = new Size(1620, 1286);
+            Controls.Add(groupBoxTesting);
             Controls.Add(groupBox1);
             Controls.Add(groupBoxProjects);
             Controls.Add(labelRedoCount);
@@ -558,6 +675,8 @@
             groupBoxProjects.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBoxTesting.ResumeLayout(false);
+            groupBoxTesting.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -607,5 +726,16 @@
         private System.Windows.Forms.Label labelProjects;
         private System.Windows.Forms.GroupBox groupBoxProjects;
         private GroupBox groupBox1;
+        
+        // Concurrency Testing Controls
+        private System.Windows.Forms.Button btnTestAsyncAwait;
+        private System.Windows.Forms.Button btnTestProducerConsumer;
+        private System.Windows.Forms.Button btnTestReaderWriterLock;
+        private System.Windows.Forms.Button btnTestBackgroundWorker;
+        private System.Windows.Forms.Button btnStressTest;
+        private System.Windows.Forms.Button btnBenchmark;
+        private System.Windows.Forms.Button btnCleanup;
+        private System.Windows.Forms.Label labelTestStatus;
+        private GroupBox groupBoxTesting;
     }
 }

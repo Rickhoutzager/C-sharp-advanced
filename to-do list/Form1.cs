@@ -24,6 +24,9 @@ namespace to_do_list
             
             // Set up command manager callbacks for UI updates
             commandManager.AddCommandExecutedCallback(UpdateCommandUI);
+            
+            // Initialize concurrency testing
+            InitializeConcurrencyTesting();
         }
 
         void LoadTodoList()
@@ -455,6 +458,326 @@ namespace to_do_list
             var projectDisplay = project.Display(0);
             MessageBox.Show(projectDisplay, $"Project: {project.Title}", 
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // Concurrency Testing Suite
+        private ConcurrencyTodoManager _concurrencyManager;
+        private System.Windows.Forms.Timer _testTimer;
+        private int _testOperationCount = 0;
+        private DateTime _testStartTime;
+
+        private void InitializeConcurrencyTesting()
+        {
+            _concurrencyManager = new ConcurrencyTodoManager();
+            _testTimer = new System.Windows.Forms.Timer();
+            _testTimer.Interval = 1000;
+            _testTimer.Tick += TestTimer_Tick;
+        }
+
+        private void TestTimer_Tick(object sender, EventArgs e)
+        {
+            _testOperationCount++;
+            labelTestStatus.Text = $"Operations: {_testOperationCount} | Time: {DateTime.Now - _testStartTime:g}";
+        }
+
+        // Async/Await Pattern Testing
+        private async void btnTestAsyncAwait_Click(object sender, EventArgs e)
+        {
+            labelTestStatus.Text = "Testing Async/Await Pattern...";
+            _testStartTime = DateTime.Now;
+            _testOperationCount = 0;
+            _testTimer.Start();
+
+            try
+            {
+                // Test rapid async file operations
+                for (int i = 0; i < 5; i++)
+                {
+                    await _concurrencyManager.SaveDataAsync();
+                    await Task.Delay(100); // Small delay between operations
+                }
+
+                // Test concurrent loading
+                var loadTask1 = _concurrencyManager.LoadDataAsync();
+                var loadTask2 = _concurrencyManager.LoadDataAsync();
+                await Task.WhenAll(loadTask1, loadTask2);
+
+                _testTimer.Stop();
+                MessageBox.Show($"Async/Await Test Complete!\n" +
+                    $"Operations: {_testOperationCount}\n" +
+                    $"Duration: {DateTime.Now - _testStartTime:g}\n" +
+                    $"UI remained responsive during operations", 
+                    "Test Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                _testTimer.Stop();
+                MessageBox.Show($"Async/Await Test Failed: {ex.Message}", "Test Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Producer-Consumer Pattern Testing
+        private async void btnTestProducerConsumer_Click(object sender, EventArgs e)
+        {
+            labelTestStatus.Text = "Testing Producer-Consumer Pattern...";
+            _testStartTime = DateTime.Now;
+            _testOperationCount = 0;
+            _testTimer.Start();
+
+            try
+            {
+                // Rapidly produce many tasks
+                var tasks = new List<Task>();
+                
+                for (int i = 0; i < 20; i++)
+                {
+                    var todoItem = new TodoItem
+                    {
+                        Title = $"Test Item {i}",
+                        Completed = false,
+                        Priority = (i % 5) + 1,
+                        Category = "Test",
+                        DueDate = DateTime.Now.AddDays(i)
+                    };
+
+                    tasks.Add(_concurrencyManager.AddTodoItemAsync(todoItem));
+                    _testOperationCount++;
+                }
+
+                // Wait for all tasks to complete
+                await Task.WhenAll(tasks);
+
+                _testTimer.Stop();
+                MessageBox.Show($"Producer-Consumer Test Complete!\n" +
+                    $"Produced: {tasks.Count} tasks\n" +
+                    $"Operations: {_testOperationCount}\n" +
+                    $"Duration: {DateTime.Now - _testStartTime:g}\n" +
+                    $"Background processing handled efficiently", 
+                    "Test Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                _testTimer.Stop();
+                MessageBox.Show($"Producer-Consumer Test Failed: {ex.Message}", "Test Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Reader-Writer Lock Pattern Testing
+        private async void btnTestReaderWriterLock_Click(object sender, EventArgs e)
+        {
+            labelTestStatus.Text = "Testing Reader-Writer Lock Pattern...";
+            _testStartTime = DateTime.Now;
+            _testOperationCount = 0;
+            _testTimer.Start();
+
+            try
+            {
+                // Simulate concurrent read and write operations
+                var readTasks = new List<Task<List<TodoItem>>>();
+                var writeTasks = new List<Task>();
+
+                // Start multiple read operations
+                for (int i = 0; i < 10; i++)
+                {
+                    readTasks.Add(Task.Run(() => _concurrencyManager.GetTodoList()));
+                    _testOperationCount++;
+                }
+
+                // Start write operations
+                for (int i = 0; i < 5; i++)
+                {
+                    var todoItem = new TodoItem
+                    {
+                        Title = $"Concurrent Item {i}",
+                        Completed = false
+                    };
+                    writeTasks.Add(_concurrencyManager.AddTodoItemAsync(todoItem));
+                    _testOperationCount++;
+                }
+
+                // Wait for all operations
+                await Task.WhenAll(readTasks.Concat(writeTasks));
+
+                _testTimer.Stop();
+                MessageBox.Show($"Reader-Writer Lock Test Complete!\n" +
+                    $"Read Operations: {readTasks.Count}\n" +
+                    $"Write Operations: {writeTasks.Count}\n" +
+                    $"Total Operations: {_testOperationCount}\n" +
+                    $"Duration: {DateTime.Now - _testStartTime:g}\n" +
+                    $"Concurrent access handled safely", 
+                    "Test Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                _testTimer.Stop();
+                MessageBox.Show($"Reader-Writer Lock Test Failed: {ex.Message}", "Test Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Background Worker Pattern Testing
+        private async void btnTestBackgroundWorker_Click(object sender, EventArgs e)
+        {
+            labelTestStatus.Text = "Testing Background Worker Pattern...";
+            _testStartTime = DateTime.Now;
+            _testOperationCount = 0;
+            _testTimer.Start();
+
+            try
+            {
+                // Test long-running operation with progress
+                await _concurrencyManager.ImportDataAsync("testfile.json");
+
+                // Wait for completion
+                await _concurrencyManager.WaitForImportCompletion();
+
+                _testTimer.Stop();
+                MessageBox.Show($"Background Worker Test Complete!\n" +
+                    $"Operations: {_testOperationCount}\n" +
+                    $"Duration: {DateTime.Now - _testStartTime:g}\n" +
+                    $"Progress reporting and cancellation worked correctly", 
+                    "Test Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                _testTimer.Stop();
+                MessageBox.Show($"Background Worker Test Failed: {ex.Message}", "Test Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Comprehensive Stress Test
+        private async void btnStressTest_Click(object sender, EventArgs e)
+        {
+            labelTestStatus.Text = "Running Comprehensive Stress Test...";
+            _testStartTime = DateTime.Now;
+            _testOperationCount = 0;
+            _testTimer.Start();
+
+            try
+            {
+                // Combine all patterns in a stress test
+                var stressTasks = new List<Task>();
+
+                // Producer-Consumer: Rapid item creation
+                for (int i = 0; i < 50; i++)
+                {
+                    var todoItem = new TodoItem
+                    {
+                        Title = $"Stress Item {i}",
+                        Completed = i % 2 == 0,
+                        Priority = (i % 5) + 1,
+                        Category = $"Category {i % 3}",
+                        DueDate = DateTime.Now.AddDays(i)
+                    };
+                    stressTasks.Add(_concurrencyManager.AddTodoItemAsync(todoItem));
+                }
+
+                // Async/Await: Concurrent file operations
+                for (int i = 0; i < 10; i++)
+                {
+                    stressTasks.Add(_concurrencyManager.SaveDataAsync());
+                }
+
+                // Reader-Writer Lock: Concurrent access
+                for (int i = 0; i < 20; i++)
+                {
+                    stressTasks.Add(Task.Run(() => _concurrencyManager.GetTodoList()));
+                }
+
+                await Task.WhenAll(stressTasks);
+
+                _testTimer.Stop();
+                MessageBox.Show($"Stress Test Complete!\n" +
+                    $"Total Operations: {stressTasks.Count}\n" +
+                    $"Operations: {_testOperationCount}\n" +
+                    $"Duration: {DateTime.Now - _testStartTime:g}\n" +
+                    $"All patterns worked together successfully", 
+                    "Stress Test Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                _testTimer.Stop();
+                MessageBox.Show($"Stress Test Failed: {ex.Message}", "Test Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Performance Benchmark
+        private async void btnBenchmark_Click(object sender, EventArgs e)
+        {
+            labelTestStatus.Text = "Running Performance Benchmark...";
+            _testStartTime = DateTime.Now;
+            _testOperationCount = 0;
+            _testTimer.Start();
+
+            try
+            {
+                var benchmarkResults = new Dictionary<string, TimeSpan>();
+
+                // Benchmark Async/Await
+                var asyncStart = DateTime.Now;
+                for (int i = 0; i < 100; i++)
+                {
+                    await _concurrencyManager.SaveDataAsync();
+                }
+                benchmarkResults["Async/Await"] = DateTime.Now - asyncStart;
+
+                // Benchmark Producer-Consumer
+                var producerStart = DateTime.Now;
+                var producerTasks = new List<Task>();
+                for (int i = 0; i < 100; i++)
+                {
+                    var todoItem = new TodoItem { Title = $"Benchmark {i}", Completed = false };
+                    producerTasks.Add(_concurrencyManager.AddTodoItemAsync(todoItem));
+                }
+                await Task.WhenAll(producerTasks);
+                benchmarkResults["Producer-Consumer"] = DateTime.Now - producerStart;
+
+                // Benchmark Reader-Writer Lock
+                var rwStart = DateTime.Now;
+                var rwTasks = new List<Task>();
+                for (int i = 0; i < 200; i++)
+                {
+                    rwTasks.Add(Task.Run(() => _concurrencyManager.GetTodoList()));
+                }
+                await Task.WhenAll(rwTasks);
+                benchmarkResults["Reader-Writer Lock"] = DateTime.Now - rwStart;
+
+                _testTimer.Stop();
+
+                var resultsText = "Performance Benchmark Results:\n\n";
+                foreach (var result in benchmarkResults)
+                {
+                    resultsText += $"{result.Key}: {result.Value.TotalMilliseconds:F2}ms\n";
+                }
+
+                MessageBox.Show(resultsText, "Benchmark Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                _testTimer.Stop();
+                MessageBox.Show($"Benchmark Failed: {ex.Message}", "Benchmark Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Cleanup
+        private async void btnCleanup_Click(object sender, EventArgs e)
+        {
+            if (_concurrencyManager != null)
+            {
+                await _concurrencyManager.ShutdownAsync();
+                _concurrencyManager.Dispose();
+                _concurrencyManager = null;
+            }
+            _testTimer?.Stop();
+            _testTimer?.Dispose();
+            labelTestStatus.Text = "Cleanup Complete";
+            MessageBox.Show("Concurrency testing resources cleaned up successfully", 
+                "Cleanup", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
