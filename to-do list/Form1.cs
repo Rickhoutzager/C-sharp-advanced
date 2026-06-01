@@ -217,7 +217,43 @@ namespace to_do_list
             }
         }
 
+        // Demonstrates the Factory Method pattern (GoF):
+        // The selected item type decides which Concrete Creator is used, and
+        // each Concrete Creator polymorphically produces its own Concrete Product
+        // (WorkTodoItem / PersonalTodoItem / UrgentTodoItem).
+        private void btnAddWithFactory_Click(object sender, EventArgs e)
+        {
+            string newTitle = textBoxNewItem.Text.Trim();
+            if (string.IsNullOrEmpty(newTitle))
+            {
+                MessageBox.Show("Please enter a title before adding.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string selectedType = comboBoxItemType.SelectedItem?.ToString() ?? "Personal";
+
+            // Select the Concrete Creator based on the chosen type.
+            TodoItemCreator creator = selectedType switch
+            {
+                "Work" => new WorkTodoItemCreator(),
+                "Personal" => new PersonalTodoItemCreator(),
+                "Urgent" => new UrgentTodoItemCreator(),
+                _ => new PersonalTodoItemCreator()
+            };
+
+            // The factory method polymorphically creates the correct Concrete Product.
+            ITodoItem createdItem = creator.CreateConfiguredTodoItem(newTitle);
+
+            // Add via the Command pattern (consistent with the rest of the app).
+            var command = TodoCommandFactory.CreateAddCommand(todoList, (TodoItem)createdItem);
+            commandManager.ExecuteCommand(command);
+            TodoStorage.Instance.Save(todoList, projects);
+            UpdateUI();
+            textBoxNewItem.Clear();
+        }
+
         private void btnEditSelected_Click(object sender, EventArgs e)
+
         {
             TodoItem? selectedItem = null;
 

@@ -45,7 +45,11 @@
             label7 = new Label();
             comboBoxCategory = new ComboBox();
             btnAddDecorated = new Button();
+            labelItemType = new Label();
+            comboBoxItemType = new ComboBox();
+            btnAddWithFactory = new Button();
             groupBoxEdit = new GroupBox();
+
             btnSaveChanges = new Button();
             btnEditSelected = new Button();
             dateTimePickerEditDueDate = new DateTimePicker();
@@ -241,9 +245,41 @@
             btnAddDecorated.UseVisualStyleBackColor = true;
             btnAddDecorated.Click += btnAddDecorated_Click;
             // 
+            // labelItemType
+            // 
+            labelItemType.AutoSize = true;
+            labelItemType.Location = new Point(27, 392);
+            labelItemType.Name = "labelItemType";
+            labelItemType.Size = new Size(115, 32);
+            labelItemType.TabIndex = 31;
+            labelItemType.Text = "Item Type:";
+            // 
+            // comboBoxItemType
+            // 
+            comboBoxItemType.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxItemType.FormattingEnabled = true;
+            comboBoxItemType.Items.AddRange(new object[] { "Work", "Personal", "Urgent" });
+            comboBoxItemType.Location = new Point(150, 385);
+            comboBoxItemType.Margin = new Padding(3, 4, 3, 4);
+            comboBoxItemType.Name = "comboBoxItemType";
+            comboBoxItemType.Size = new Size(195, 40);
+            comboBoxItemType.TabIndex = 32;
+            // 
+            // btnAddWithFactory
+            // 
+            btnAddWithFactory.Location = new Point(77, 480);
+            btnAddWithFactory.Margin = new Padding(3, 4, 3, 4);
+            btnAddWithFactory.Name = "btnAddWithFactory";
+            btnAddWithFactory.Size = new Size(220, 42);
+            btnAddWithFactory.TabIndex = 33;
+            btnAddWithFactory.Text = "Add (Factory Method)";
+            btnAddWithFactory.UseVisualStyleBackColor = true;
+            btnAddWithFactory.Click += btnAddWithFactory_Click;
+            // 
             // groupBoxEdit
             // 
             groupBoxEdit.Controls.Add(btnSaveChanges);
+
             groupBoxEdit.Controls.Add(btnEditSelected);
             groupBoxEdit.Controls.Add(dateTimePickerEditDueDate);
             groupBoxEdit.Controls.Add(comboBoxEditCategory);
@@ -518,7 +554,11 @@
             groupBox1.Controls.Add(dateTimePickerDueDate);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(btnAddDecorated);
+            groupBox1.Controls.Add(labelItemType);
+            groupBox1.Controls.Add(comboBoxItemType);
+            groupBox1.Controls.Add(btnAddWithFactory);
             groupBox1.Location = new Point(43, 713);
+
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(368, 490);
             groupBox1.TabIndex = 30;
@@ -698,7 +738,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBoxCategory;
         private System.Windows.Forms.Button btnAddDecorated;
+        private System.Windows.Forms.Label labelItemType;
+        private System.Windows.Forms.ComboBox comboBoxItemType;
+        private System.Windows.Forms.Button btnAddWithFactory;
         private System.Windows.Forms.GroupBox groupBoxEdit;
+
         private System.Windows.Forms.Button btnSaveChanges;
         private System.Windows.Forms.Button btnEditSelected;
         private System.Windows.Forms.Button btnUndo;

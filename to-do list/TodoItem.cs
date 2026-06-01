@@ -7,8 +7,9 @@ using to_do_list.Patterns;
 
 namespace to_do_list
 {
-    public class TodoItem
+    public class TodoItem : ITodoItem
     {
+
         public string Title { get; set; }
         public bool Completed { get; set; }
         public int Priority { get; set; }
