@@ -8,4 +8,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Exclude the test project's sources from the main app's compilation -->
+  <ItemGroup>
+    <Compile Remove="ToDoList.Tests/**/*.cs" />
+    <Content Remove="ToDoList.Tests/**/*" />
+    <None Remove="ToDoList.Tests/**/*" />
+    <EmbeddedResource Remove="ToDoList.Tests/**/*" />
+  </ItemGroup>
+
 </Project>
