@@ -422,6 +422,7 @@
             btnUndo.TabIndex = 18;
             btnUndo.Text = "Undo";
             btnUndo.UseVisualStyleBackColor = true;
+            btnUndo.Click += btnUndo_Click;
             // 
             // btnRedo
             // 
@@ -432,6 +433,7 @@
             btnRedo.TabIndex = 19;
             btnRedo.Text = "Redo";
             btnRedo.UseVisualStyleBackColor = true;
+            btnRedo.Click += btnRedo_Click;
             // 
             // labelUndo
             // 
