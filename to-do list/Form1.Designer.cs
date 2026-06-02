@@ -49,7 +49,6 @@
             comboBoxItemType = new ComboBox();
             btnAddWithFactory = new Button();
             groupBoxEdit = new GroupBox();
-
             btnSaveChanges = new Button();
             btnEditSelected = new Button();
             dateTimePickerEditDueDate = new DateTimePicker();
@@ -75,15 +74,25 @@
             groupBoxProjects = new GroupBox();
             btnShowProjectContents = new Button();
             groupBox1 = new GroupBox();
+            groupBoxTesting = new GroupBox();
+            labelTestStatus = new Label();
+            btnCleanup = new Button();
+            btnBenchmark = new Button();
+            btnStressTest = new Button();
+            btnTestBackgroundWorker = new Button();
+            btnTestReaderWriterLock = new Button();
+            btnTestProducerConsumer = new Button();
+            btnTestAsyncAwait = new Button();
             groupBoxEdit.SuspendLayout();
             groupBoxProjects.SuspendLayout();
             groupBox1.SuspendLayout();
+            groupBoxTesting.SuspendLayout();
             SuspendLayout();
             // 
             // listBoxIncomplete
             // 
             listBoxIncomplete.FormattingEnabled = true;
-            listBoxIncomplete.Location = new Point(25, 262);
+            listBoxIncomplete.Location = new Point(26, 168);
             listBoxIncomplete.Margin = new Padding(3, 4, 3, 4);
             listBoxIncomplete.Name = "listBoxIncomplete";
             listBoxIncomplete.Size = new Size(578, 388);
@@ -93,7 +102,7 @@
             // listBoxComplete
             // 
             listBoxComplete.FormattingEnabled = true;
-            listBoxComplete.Location = new Point(614, 262);
+            listBoxComplete.Location = new Point(1011, 168);
             listBoxComplete.Margin = new Padding(3, 4, 3, 4);
             listBoxComplete.Name = "listBoxComplete";
             listBoxComplete.Size = new Size(578, 388);
@@ -110,7 +119,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(25, 226);
+            label2.Location = new Point(26, 132);
             label2.Name = "label2";
             label2.Size = new Size(195, 32);
             label2.TabIndex = 2;
@@ -119,7 +128,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(608, 226);
+            label3.Location = new Point(1005, 132);
             label3.Name = "label3";
             label3.Size = new Size(193, 32);
             label3.TabIndex = 3;
@@ -128,7 +137,7 @@
             // 
             // textBoxNewItem
             // 
-            textBoxNewItem.Location = new Point(150, 107);
+            textBoxNewItem.Location = new Point(146, 77);
             textBoxNewItem.Margin = new Padding(3, 4, 3, 4);
             textBoxNewItem.Name = "textBoxNewItem";
             textBoxNewItem.Size = new Size(195, 39);
@@ -136,7 +145,7 @@
             // 
             // btnToggleComplete
             // 
-            btnToggleComplete.Location = new Point(872, 13);
+            btnToggleComplete.Location = new Point(680, 324);
             btnToggleComplete.Margin = new Padding(3, 4, 3, 4);
             btnToggleComplete.Name = "btnToggleComplete";
             btnToggleComplete.Size = new Size(242, 67);
@@ -171,7 +180,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(31, 114);
+            label4.Location = new Point(27, 84);
             label4.Name = "label4";
             label4.Size = new Size(65, 32);
             label4.TabIndex = 9;
@@ -180,7 +189,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(27, 190);
+            label5.Location = new Point(23, 160);
             label5.Name = "label5";
             label5.Size = new Size(94, 32);
             label5.TabIndex = 10;
@@ -191,7 +200,7 @@
             comboBoxPriority.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxPriority.FormattingEnabled = true;
             comboBoxPriority.Items.AddRange(new object[] { "1 - Low", "2 - Medium", "3 - High", "4 - Very High", "5 - Urgent" });
-            comboBoxPriority.Location = new Point(150, 187);
+            comboBoxPriority.Location = new Point(146, 157);
             comboBoxPriority.Margin = new Padding(3, 4, 3, 4);
             comboBoxPriority.Name = "comboBoxPriority";
             comboBoxPriority.Size = new Size(195, 40);
@@ -200,7 +209,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(27, 345);
+            label6.Location = new Point(23, 315);
             label6.Name = "label6";
             label6.Size = new Size(120, 32);
             label6.TabIndex = 12;
@@ -208,7 +217,7 @@
             // 
             // dateTimePickerDueDate
             // 
-            dateTimePickerDueDate.Location = new Point(150, 337);
+            dateTimePickerDueDate.Location = new Point(146, 307);
             dateTimePickerDueDate.Margin = new Padding(3, 4, 3, 4);
             dateTimePickerDueDate.Name = "dateTimePickerDueDate";
             dateTimePickerDueDate.Size = new Size(195, 39);
@@ -217,7 +226,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(27, 264);
+            label7.Location = new Point(23, 234);
             label7.Name = "label7";
             label7.Size = new Size(115, 32);
             label7.TabIndex = 14;
@@ -228,7 +237,7 @@
             comboBoxCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxCategory.FormattingEnabled = true;
             comboBoxCategory.Items.AddRange(new object[] { "General", "Work", "Personal", "Shopping", "Health" });
-            comboBoxCategory.Location = new Point(150, 267);
+            comboBoxCategory.Location = new Point(146, 237);
             comboBoxCategory.Margin = new Padding(3, 4, 3, 4);
             comboBoxCategory.Name = "comboBoxCategory";
             comboBoxCategory.Size = new Size(195, 40);
@@ -236,10 +245,10 @@
             // 
             // btnAddDecorated
             // 
-            btnAddDecorated.Location = new Point(77, 428);
+            btnAddDecorated.Location = new Point(54, 444);
             btnAddDecorated.Margin = new Padding(3, 4, 3, 4);
             btnAddDecorated.Name = "btnAddDecorated";
-            btnAddDecorated.Size = new Size(162, 42);
+            btnAddDecorated.Size = new Size(218, 42);
             btnAddDecorated.TabIndex = 16;
             btnAddDecorated.Text = "Add Decorated";
             btnAddDecorated.UseVisualStyleBackColor = true;
@@ -248,9 +257,9 @@
             // labelItemType
             // 
             labelItemType.AutoSize = true;
-            labelItemType.Location = new Point(27, 392);
+            labelItemType.Location = new Point(23, 386);
             labelItemType.Name = "labelItemType";
-            labelItemType.Size = new Size(115, 32);
+            labelItemType.Size = new Size(125, 32);
             labelItemType.TabIndex = 31;
             labelItemType.Text = "Item Type:";
             // 
@@ -259,7 +268,7 @@
             comboBoxItemType.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxItemType.FormattingEnabled = true;
             comboBoxItemType.Items.AddRange(new object[] { "Work", "Personal", "Urgent" });
-            comboBoxItemType.Location = new Point(150, 385);
+            comboBoxItemType.Location = new Point(146, 379);
             comboBoxItemType.Margin = new Padding(3, 4, 3, 4);
             comboBoxItemType.Name = "comboBoxItemType";
             comboBoxItemType.Size = new Size(195, 40);
@@ -267,10 +276,10 @@
             // 
             // btnAddWithFactory
             // 
-            btnAddWithFactory.Location = new Point(77, 480);
+            btnAddWithFactory.Location = new Point(27, 494);
             btnAddWithFactory.Margin = new Padding(3, 4, 3, 4);
             btnAddWithFactory.Name = "btnAddWithFactory";
-            btnAddWithFactory.Size = new Size(220, 42);
+            btnAddWithFactory.Size = new Size(276, 42);
             btnAddWithFactory.TabIndex = 33;
             btnAddWithFactory.Text = "Add (Factory Method)";
             btnAddWithFactory.UseVisualStyleBackColor = true;
@@ -279,7 +288,6 @@
             // groupBoxEdit
             // 
             groupBoxEdit.Controls.Add(btnSaveChanges);
-
             groupBoxEdit.Controls.Add(btnEditSelected);
             groupBoxEdit.Controls.Add(dateTimePickerEditDueDate);
             groupBoxEdit.Controls.Add(comboBoxEditCategory);
@@ -290,7 +298,7 @@
             groupBoxEdit.Controls.Add(labelEditPriority);
             groupBoxEdit.Controls.Add(labelEditTitle);
             groupBoxEdit.Controls.Add(labelEditHeader);
-            groupBoxEdit.Location = new Point(840, 713);
+            groupBoxEdit.Location = new Point(426, 619);
             groupBoxEdit.Margin = new Padding(3, 4, 3, 4);
             groupBoxEdit.Name = "groupBoxEdit";
             groupBoxEdit.Padding = new Padding(3, 4, 3, 4);
@@ -523,7 +531,7 @@
             groupBoxProjects.Controls.Add(btnAddToProject);
             groupBoxProjects.Controls.Add(btnCreateProject);
             groupBoxProjects.Controls.Add(btnShowProjectContents);
-            groupBoxProjects.Location = new Point(427, 713);
+            groupBoxProjects.Location = new Point(815, 626);
             groupBoxProjects.Margin = new Padding(3, 4, 3, 4);
             groupBoxProjects.Name = "groupBoxProjects";
             groupBoxProjects.Padding = new Padding(3, 4, 3, 4);
@@ -557,121 +565,15 @@
             groupBox1.Controls.Add(labelItemType);
             groupBox1.Controls.Add(comboBoxItemType);
             groupBox1.Controls.Add(btnAddWithFactory);
-            groupBox1.Location = new Point(43, 713);
-
+            groupBox1.Location = new Point(44, 619);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(368, 490);
+            groupBox1.Size = new Size(368, 579);
             groupBox1.TabIndex = 30;
             groupBox1.TabStop = false;
             groupBox1.Text = "Add New Item";
             // 
             // groupBoxTesting
             // 
-            groupBoxTesting = new GroupBox();
-            groupBoxTesting.Location = new Point(1220, 713);
-            groupBoxTesting.Name = "groupBoxTesting";
-            groupBoxTesting.Size = new Size(368, 490);
-            groupBoxTesting.TabIndex = 31;
-            groupBoxTesting.TabStop = false;
-            groupBoxTesting.Text = "Concurrency Testing";
-            
-            // 
-            // labelTestStatus
-            // 
-            labelTestStatus = new Label();
-            labelTestStatus.AutoSize = true;
-            labelTestStatus.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelTestStatus.Location = new Point(27, 427);
-            labelTestStatus.Name = "labelTestStatus";
-            labelTestStatus.Size = new Size(164, 31);
-            labelTestStatus.TabIndex = 0;
-            labelTestStatus.Text = "Test Status: Ready";
-            
-            // 
-            // btnTestAsyncAwait
-            // 
-            btnTestAsyncAwait = new Button();
-            btnTestAsyncAwait.Location = new Point(25, 32);
-            btnTestAsyncAwait.Name = "btnTestAsyncAwait";
-            btnTestAsyncAwait.Size = new Size(320, 45);
-            btnTestAsyncAwait.TabIndex = 1;
-            btnTestAsyncAwait.Text = "Test Async/Await Pattern";
-            btnTestAsyncAwait.UseVisualStyleBackColor = true;
-            btnTestAsyncAwait.Click += btnTestAsyncAwait_Click;
-            
-            // 
-            // btnTestProducerConsumer
-            // 
-            btnTestProducerConsumer = new Button();
-            btnTestProducerConsumer.Location = new Point(25, 83);
-            btnTestProducerConsumer.Name = "btnTestProducerConsumer";
-            btnTestProducerConsumer.Size = new Size(320, 45);
-            btnTestProducerConsumer.TabIndex = 2;
-            btnTestProducerConsumer.Text = "Test Producer-Consumer Pattern";
-            btnTestProducerConsumer.UseVisualStyleBackColor = true;
-            btnTestProducerConsumer.Click += btnTestProducerConsumer_Click;
-            
-            // 
-            // btnTestReaderWriterLock
-            // 
-            btnTestReaderWriterLock = new Button();
-            btnTestReaderWriterLock.Location = new Point(25, 134);
-            btnTestReaderWriterLock.Name = "btnTestReaderWriterLock";
-            btnTestReaderWriterLock.Size = new Size(320, 45);
-            btnTestReaderWriterLock.TabIndex = 3;
-            btnTestReaderWriterLock.Text = "Test Reader-Writer Lock Pattern";
-            btnTestReaderWriterLock.UseVisualStyleBackColor = true;
-            btnTestReaderWriterLock.Click += btnTestReaderWriterLock_Click;
-            
-            // 
-            // btnTestBackgroundWorker
-            // 
-            btnTestBackgroundWorker = new Button();
-            btnTestBackgroundWorker.Location = new Point(25, 185);
-            btnTestBackgroundWorker.Name = "btnTestBackgroundWorker";
-            btnTestBackgroundWorker.Size = new Size(320, 45);
-            btnTestBackgroundWorker.TabIndex = 4;
-            btnTestBackgroundWorker.Text = "Test Background Worker Pattern";
-            btnTestBackgroundWorker.UseVisualStyleBackColor = true;
-            btnTestBackgroundWorker.Click += btnTestBackgroundWorker_Click;
-            
-            // 
-            // btnStressTest
-            // 
-            btnStressTest = new Button();
-            btnStressTest.Location = new Point(25, 236);
-            btnStressTest.Name = "btnStressTest";
-            btnStressTest.Size = new Size(320, 45);
-            btnStressTest.TabIndex = 5;
-            btnStressTest.Text = "Comprehensive Stress Test";
-            btnStressTest.UseVisualStyleBackColor = true;
-            btnStressTest.Click += btnStressTest_Click;
-            
-            // 
-            // btnBenchmark
-            // 
-            btnBenchmark = new Button();
-            btnBenchmark.Location = new Point(25, 287);
-            btnBenchmark.Name = "btnBenchmark";
-            btnBenchmark.Size = new Size(320, 45);
-            btnBenchmark.TabIndex = 6;
-            btnBenchmark.Text = "Performance Benchmark";
-            btnBenchmark.UseVisualStyleBackColor = true;
-            btnBenchmark.Click += btnBenchmark_Click;
-            
-            // 
-            // btnCleanup
-            // 
-            btnCleanup = new Button();
-            btnCleanup.Location = new Point(25, 338);
-            btnCleanup.Name = "btnCleanup";
-            btnCleanup.Size = new Size(320, 45);
-            btnCleanup.TabIndex = 7;
-            btnCleanup.Text = "Cleanup Resources";
-            btnCleanup.UseVisualStyleBackColor = true;
-            btnCleanup.Click += btnCleanup_Click;
-            
-            // Add controls to group box
             groupBoxTesting.Controls.Add(labelTestStatus);
             groupBoxTesting.Controls.Add(btnCleanup);
             groupBoxTesting.Controls.Add(btnBenchmark);
@@ -680,12 +582,98 @@
             groupBoxTesting.Controls.Add(btnTestReaderWriterLock);
             groupBoxTesting.Controls.Add(btnTestProducerConsumer);
             groupBoxTesting.Controls.Add(btnTestAsyncAwait);
+            groupBoxTesting.Location = new Point(1221, 619);
+            groupBoxTesting.Name = "groupBoxTesting";
+            groupBoxTesting.Size = new Size(368, 490);
+            groupBoxTesting.TabIndex = 31;
+            groupBoxTesting.TabStop = false;
+            groupBoxTesting.Text = "Concurrency Testing";
+            // 
+            // labelTestStatus
+            // 
+            labelTestStatus.AutoSize = true;
+            labelTestStatus.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTestStatus.Location = new Point(27, 427);
+            labelTestStatus.Name = "labelTestStatus";
+            labelTestStatus.Size = new Size(265, 31);
+            labelTestStatus.TabIndex = 0;
+            labelTestStatus.Text = "Test Status: Ready";
+            // 
+            // btnCleanup
+            // 
+            btnCleanup.Location = new Point(25, 338);
+            btnCleanup.Name = "btnCleanup";
+            btnCleanup.Size = new Size(320, 45);
+            btnCleanup.TabIndex = 7;
+            btnCleanup.Text = "Cleanup Resources";
+            btnCleanup.UseVisualStyleBackColor = true;
+            btnCleanup.Click += btnCleanup_Click;
+            // 
+            // btnBenchmark
+            // 
+            btnBenchmark.Location = new Point(25, 287);
+            btnBenchmark.Name = "btnBenchmark";
+            btnBenchmark.Size = new Size(320, 45);
+            btnBenchmark.TabIndex = 6;
+            btnBenchmark.Text = "Performance Benchmark";
+            btnBenchmark.UseVisualStyleBackColor = true;
+            btnBenchmark.Click += btnBenchmark_Click;
+            // 
+            // btnStressTest
+            // 
+            btnStressTest.Location = new Point(25, 236);
+            btnStressTest.Name = "btnStressTest";
+            btnStressTest.Size = new Size(320, 45);
+            btnStressTest.TabIndex = 5;
+            btnStressTest.Text = "Comprehensive Stress Test";
+            btnStressTest.UseVisualStyleBackColor = true;
+            btnStressTest.Click += btnStressTest_Click;
+            // 
+            // btnTestBackgroundWorker
+            // 
+            btnTestBackgroundWorker.Location = new Point(25, 185);
+            btnTestBackgroundWorker.Name = "btnTestBackgroundWorker";
+            btnTestBackgroundWorker.Size = new Size(320, 45);
+            btnTestBackgroundWorker.TabIndex = 4;
+            btnTestBackgroundWorker.Text = "Test Background Worker Pattern";
+            btnTestBackgroundWorker.UseVisualStyleBackColor = true;
+            btnTestBackgroundWorker.Click += btnTestBackgroundWorker_Click;
+            // 
+            // btnTestReaderWriterLock
+            // 
+            btnTestReaderWriterLock.Location = new Point(25, 134);
+            btnTestReaderWriterLock.Name = "btnTestReaderWriterLock";
+            btnTestReaderWriterLock.Size = new Size(320, 45);
+            btnTestReaderWriterLock.TabIndex = 3;
+            btnTestReaderWriterLock.Text = "Test Reader-Writer Lock Pattern";
+            btnTestReaderWriterLock.UseVisualStyleBackColor = true;
+            btnTestReaderWriterLock.Click += btnTestReaderWriterLock_Click;
+            // 
+            // btnTestProducerConsumer
+            // 
+            btnTestProducerConsumer.Location = new Point(25, 83);
+            btnTestProducerConsumer.Name = "btnTestProducerConsumer";
+            btnTestProducerConsumer.Size = new Size(320, 45);
+            btnTestProducerConsumer.TabIndex = 2;
+            btnTestProducerConsumer.Text = "Test Producer-Consumer Pattern";
+            btnTestProducerConsumer.UseVisualStyleBackColor = true;
+            btnTestProducerConsumer.Click += btnTestProducerConsumer_Click;
+            // 
+            // btnTestAsyncAwait
+            // 
+            btnTestAsyncAwait.Location = new Point(25, 32);
+            btnTestAsyncAwait.Name = "btnTestAsyncAwait";
+            btnTestAsyncAwait.Size = new Size(320, 45);
+            btnTestAsyncAwait.TabIndex = 1;
+            btnTestAsyncAwait.Text = "Test Async/Await Pattern";
+            btnTestAsyncAwait.UseVisualStyleBackColor = true;
+            btnTestAsyncAwait.Click += btnTestAsyncAwait_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1889, 1392);
+            ClientSize = new Size(1626, 1226);
             Controls.Add(groupBoxTesting);
             Controls.Add(groupBox1);
             Controls.Add(groupBoxProjects);
