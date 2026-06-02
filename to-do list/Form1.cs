@@ -126,10 +126,12 @@ namespace to_do_list
                 listBoxComplete.ClearSelected();
                 var selectedItem = (TodoItem)listBoxIncomplete.SelectedItem;
                 selectionManager.UpdateSelection(selectedItem, true, false);
+                PopulateEditForm();
             }
             else
             {
                 selectionManager.ClearSelection();
+                ClearEditControls();
             }
         }
 
@@ -140,10 +142,12 @@ namespace to_do_list
                 listBoxIncomplete.ClearSelected();
                 var selectedItem = (TodoItem)listBoxComplete.SelectedItem;
                 selectionManager.UpdateSelection(selectedItem, false, true);
+                PopulateEditForm();
             }
             else
             {
                 selectionManager.ClearSelection();
+                ClearEditControls();
             }
         }
         private void btnSaveFile_Click_1(object sender, EventArgs e)
@@ -252,8 +256,7 @@ namespace to_do_list
             textBoxNewItem.Clear();
         }
 
-        private void btnEditSelected_Click(object sender, EventArgs e)
-
+        private void PopulateEditForm()
         {
             TodoItem? selectedItem = null;
 
@@ -277,10 +280,6 @@ namespace to_do_list
                 // Update header to show which item is being edited
                 labelEditHeader.Text = $"Editing: {selectedItem.Title}";
                 labelEditHeader.ForeColor = System.Drawing.Color.Blue;
-            }
-            else
-            {
-                MessageBox.Show("Please select an item to edit.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

@@ -50,7 +50,6 @@
             btnAddWithFactory = new Button();
             groupBoxEdit = new GroupBox();
             btnSaveChanges = new Button();
-            btnEditSelected = new Button();
             dateTimePickerEditDueDate = new DateTimePicker();
             comboBoxEditCategory = new ComboBox();
             comboBoxEditPriority = new ComboBox();
@@ -288,7 +287,6 @@
             // groupBoxEdit
             // 
             groupBoxEdit.Controls.Add(btnSaveChanges);
-            groupBoxEdit.Controls.Add(btnEditSelected);
             groupBoxEdit.Controls.Add(dateTimePickerEditDueDate);
             groupBoxEdit.Controls.Add(comboBoxEditCategory);
             groupBoxEdit.Controls.Add(comboBoxEditPriority);
@@ -309,7 +307,7 @@
             // 
             // btnSaveChanges
             // 
-            btnSaveChanges.Location = new Point(195, 427);
+            btnSaveChanges.Location = new Point(32, 427);
             btnSaveChanges.Margin = new Padding(3, 4, 3, 4);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.Size = new Size(141, 45);
@@ -317,17 +315,6 @@
             btnSaveChanges.Text = "Save Changes";
             btnSaveChanges.UseVisualStyleBackColor = true;
             btnSaveChanges.Click += btnSaveChanges_Click;
-            // 
-            // btnEditSelected
-            // 
-            btnEditSelected.Location = new Point(32, 427);
-            btnEditSelected.Margin = new Padding(3, 4, 3, 4);
-            btnEditSelected.Name = "btnEditSelected";
-            btnEditSelected.Size = new Size(141, 45);
-            btnEditSelected.TabIndex = 20;
-            btnEditSelected.Text = "Edit Selected";
-            btnEditSelected.UseVisualStyleBackColor = true;
-            btnEditSelected.Click += btnEditSelected_Click;
             // 
             // dateTimePickerEditDueDate
             // 
@@ -411,7 +398,7 @@
             labelEditHeader.Name = "labelEditHeader";
             labelEditHeader.Size = new Size(272, 31);
             labelEditHeader.TabIndex = 11;
-            labelEditHeader.Text = "Select item and click 'edit'";
+            labelEditHeader.Text = "Select an item";
             // 
             // btnUndo
             // 
@@ -737,7 +724,6 @@
         private System.Windows.Forms.GroupBox groupBoxEdit;
 
         private System.Windows.Forms.Button btnSaveChanges;
-        private System.Windows.Forms.Button btnEditSelected;
         private System.Windows.Forms.Button btnUndo;
         private System.Windows.Forms.Button btnRedo;
         private System.Windows.Forms.Label labelUndo;
