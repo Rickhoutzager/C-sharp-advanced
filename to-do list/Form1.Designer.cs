@@ -675,7 +675,10 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1626, 1226);
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ClientSize = new Size(1626, 1200);
+            Padding = new Padding(20);
             Controls.Add(groupBoxTesting);
             Controls.Add(groupBox1);
             Controls.Add(groupBoxProjects);
