@@ -411,7 +411,7 @@
             labelEditHeader.Name = "labelEditHeader";
             labelEditHeader.Size = new Size(272, 31);
             labelEditHeader.TabIndex = 11;
-            labelEditHeader.Text = "Select item to edit it";
+            labelEditHeader.Text = "Select item and click 'edit'";
             // 
             // btnUndo
             // 
