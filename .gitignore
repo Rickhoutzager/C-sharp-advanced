@@ -1,4 +1,25 @@
-/to-do list/bin
-/to-do list/obj
-.DS_STORE
-/to-do list/.vs
+# Build results
+bin/
+obj/
+
+# macOS files
+.DS_Store
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider IDE
+.idea/
+
+# NuGet packages
+*.nupkg
+**/[Pp]ackages/*
+
+# Coverlet coverage reports
+*.opencover.xml
+coverage*.json
+coverage*.xml
