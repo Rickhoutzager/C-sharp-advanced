@@ -21,7 +21,25 @@ namespace to_do_list.Patterns
         {
             if (!File.Exists(filePath)) return new List<TodoItem>();
             string json = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<TodoItem>>(json) ?? new List<TodoItem>();
+            
+            // Try new format (TodoData with TodoItems + Projects)
+            try
+            {
+                var todoData = JsonSerializer.Deserialize<TodoData>(json);
+                if (todoData?.TodoItems != null)
+                    return todoData.TodoItems;
+            }
+            catch { }
+            
+            // Fall back to old format (just a list of TodoItem)
+            try
+            {
+                return JsonSerializer.Deserialize<List<TodoItem>>(json) ?? new List<TodoItem>();
+            }
+            catch
+            {
+                return new List<TodoItem>();
+            }
         }
 
         public void Save(string filePath, List<TodoItem> items)
