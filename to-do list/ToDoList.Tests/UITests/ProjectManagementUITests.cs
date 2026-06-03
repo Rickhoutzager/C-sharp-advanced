@@ -111,7 +111,7 @@ namespace ToDoList.Tests.UITests
             Thread.Sleep(300);
 
             // Step 4: Select the project from the projects combo box
-            SelectComboItem(ProjectsComboBoxIndex, "Test Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Test Project");
             Thread.Sleep(300);
 
             // Step 5: Click "Add to Project" and dismiss the success message
@@ -136,14 +136,14 @@ namespace ToDoList.Tests.UITests
 
             SelectListItem(0, 0);
             Thread.Sleep(300);
-            SelectComboItem(ProjectsComboBoxIndex, "Completion Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Completion Project");
             Thread.Sleep(300);
             ClickButton("Add to Project");
             Thread.Sleep(500);
             ClickMessageBoxOk("Item Added");
 
             // Act: Complete the project
-            SelectComboItem(ProjectsComboBoxIndex, "Completion Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Completion Project");
             Thread.Sleep(300);
             ClickButton("Complete Project");
             Thread.Sleep(500);
@@ -176,7 +176,7 @@ namespace ToDoList.Tests.UITests
             // Add first item to project
             SelectListItem(0, 0);
             Thread.Sleep(300);
-            SelectComboItem(ProjectsComboBoxIndex, "Multi Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Multi Project");
             Thread.Sleep(300);
             ClickButton("Add to Project");
             Thread.Sleep(500);
@@ -185,14 +185,14 @@ namespace ToDoList.Tests.UITests
             // Add second item to project
             SelectListItem(0, 0);
             Thread.Sleep(300);
-            SelectComboItem(ProjectsComboBoxIndex, "Multi Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Multi Project");
             Thread.Sleep(300);
             ClickButton("Add to Project");
             Thread.Sleep(500);
             ClickMessageBoxOk("Item Added");
 
             // Act: Complete the project
-            SelectComboItem(ProjectsComboBoxIndex, "Multi Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Multi Project");
             Thread.Sleep(300);
             ClickButton("Complete Project");
             Thread.Sleep(500);
@@ -219,14 +219,14 @@ namespace ToDoList.Tests.UITests
 
             SelectListItem(0, 0);
             Thread.Sleep(300);
-            SelectComboItem(ProjectsComboBoxIndex, "Hierarchy Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Hierarchy Project");
             Thread.Sleep(300);
             ClickButton("Add to Project");
             Thread.Sleep(500);
             ClickMessageBoxOk("Item Added");
 
             // Act: Show the project contents
-            SelectComboItem(ProjectsComboBoxIndex, "Hierarchy Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Hierarchy Project");
             Thread.Sleep(300);
             ClickButton("Show Project Contents");
             Thread.Sleep(500);
@@ -254,7 +254,7 @@ namespace ToDoList.Tests.UITests
 
             SelectListItem(0, 0);
             Thread.Sleep(300);
-            SelectComboItem(ProjectsComboBoxIndex, "Persistent Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Persistent Project");
             Thread.Sleep(300);
             ClickButton("Add to Project");
             Thread.Sleep(500);
@@ -270,7 +270,7 @@ namespace ToDoList.Tests.UITests
 
             // Assert: The project still exists and can show its contents
             // The project should retain the item even though it was removed from the main list
-            SelectComboItem(ProjectsComboBoxIndex, "Persistent Project");
+            SelectComboItemNative(ProjectsComboBoxIndex, "Persistent Project");
             Thread.Sleep(300);
             ClickButton("Show Project Contents");
             Thread.Sleep(500);
