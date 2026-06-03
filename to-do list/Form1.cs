@@ -217,6 +217,7 @@ namespace to_do_list
                 var command = TodoCommandFactory.CreateAddCommand(todoList, todoItem);
                 commandManager.ExecuteCommand(command);
                 TodoStorage.Instance.Save(todoList, projects);
+                UpdateUI();
                 textBoxNewItem.Clear();
             }
         }
