@@ -235,6 +235,9 @@ namespace ToDoList.Tests.UITests
 
         /// <summary>
         /// Wait for a modal dialog window to appear (e.g., MessageBox, InputBox, FileDialog).
+        /// Searches both top-level desktop children AND descendants of the main window,
+        /// because WinForms MessageBox dialogs are owned by the form and may appear
+        /// in either place in the UIA tree.
         /// </summary>
         protected FlaUI.Core.AutomationElements.Window? WaitForDialog(string? titleContains = null, TimeSpan? timeout = null)
         {
@@ -243,6 +246,7 @@ namespace ToDoList.Tests.UITests
 
             while (DateTime.Now - startTime < timeout.Value)
             {
+                // Search 1: top-level desktop children (catches most dialogs)
                 var desktop = automation?.GetDesktop();
                 if (desktop != null)
                 {
@@ -260,6 +264,27 @@ namespace ToDoList.Tests.UITests
                         }
                     }
                 }
+
+                // Search 2: descendants of the main window (catches owned MessageBox dialogs
+                // that WinForms shows as child windows in the UIA tree)
+                if (mainWindow != null)
+                {
+                    try
+                    {
+                        var childWindows = mainWindow.FindAllDescendants(
+                            cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.Window));
+                        foreach (var window in childWindows)
+                        {
+                            if (titleContains == null ||
+                                window.Name.Contains(titleContains, StringComparison.OrdinalIgnoreCase))
+                            {
+                                return window.AsWindow();
+                            }
+                        }
+                    }
+                    catch { /* UIA tree may be in flux; retry */ }
+                }
+
                 Thread.Sleep(200);
             }
             return null;
@@ -267,37 +292,54 @@ namespace ToDoList.Tests.UITests
 
         /// <summary>
         /// Click OK on a MessageBox and wait for it to close.
+        /// Uses PostMessage(BM_CLICK) as the primary approach — PostMessage is
+        /// asynchronous and never blocks even when the UI thread is inside a
+        /// modal MessageBox pump. Falls back to UIA Invoke if the button HWND
+        /// cannot be found via Win32.
+        /// No SendKeys, no SetForegroundWindow.
         /// </summary>
         protected void ClickMessageBoxOk(string? expectedTitlePart = null)
         {
-            var dialog = WaitForDialog(expectedTitlePart);
-            if (dialog != null)
+            var dialog = WaitForDialog(expectedTitlePart, TimeSpan.FromSeconds(5));
+            if (dialog == null)
+                return; // dialog never appeared or already closed
+
+            nint dialogHwnd = nint.Zero;
+            try { dialogHwnd = dialog.Properties.NativeWindowHandle; } catch { }
+
+            // --- Approach 1: PostMessage(BM_CLICK) to the first Button child ---
+            // PostMessage is fire-and-forget — it never blocks even when the UI
+            // thread is inside a modal MessageBox message pump.
+            if (dialogHwnd != nint.Zero)
             {
-                // Try UIA button click first
+                // Walk the child chain to find all Button HWNDs
+                nint hBtn = FindWindowEx(dialogHwnd, nint.Zero, "Button", null);
+                if (hBtn != nint.Zero)
+                {
+                    PostMessage(hBtn, BM_CLICK, nint.Zero, nint.Zero);
+                    Thread.Sleep(400);
+                    if (WaitForDialog(expectedTitlePart, TimeSpan.FromSeconds(1)) == null)
+                        return; // closed successfully
+                }
+            }
+
+            // --- Approach 2: UIA Invoke on the OK button ---
+            // Only reached if PostMessage didn't find a Button child (rare).
+            try
+            {
                 var okButton = dialog.FindFirstDescendant(
                     c => c.ByControlType(FlaUI.Core.Definitions.ControlType.Button));
-                okButton?.AsButton().Click();
-
-                // Verify the dialog actually closed; if not, use SendKeys fallback.
-                // MessageBox buttons in WinForms can be inside a pane that
-                // FindFirstDescendant misses, leaving the dialog open and
-                // breaking subsequent tests.
-                Thread.Sleep(200);
-                var stillAlive = WaitForDialog(expectedTitlePart, TimeSpan.FromSeconds(1));
-                if (stillAlive != null)
+                if (okButton != null)
                 {
-                    // SendKeys fallback: ENTER activates the default button (OK)
-                    System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+                    var invokePattern = okButton.Patterns.Invoke.PatternOrDefault;
+                    if (invokePattern != null)
+                        invokePattern.Invoke();
+                    else
+                        okButton.AsButton().Click();
                     Thread.Sleep(300);
                 }
             }
-            else
-            {
-                // Dialog not found via UIA — try SendKeys ENTER as last resort
-                // (may dismiss a lingering MessageBox that UIA couldn't see)
-                System.Windows.Forms.SendKeys.SendWait("{ENTER}");
-                Thread.Sleep(300);
-            }
+            catch { }
         }
 
         /// <summary>
@@ -381,30 +423,58 @@ namespace ToDoList.Tests.UITests
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern nint GetDlgItem(nint hDlg, int nIDDlgItem);
 
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern nint GetParent(nint hWnd);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern int GetDlgCtrlID(nint hWnd);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern uint GetWindowThreadProcessId(nint hWnd, out uint lpdwProcessId);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        private static extern bool PostMessage(nint hWnd, uint Msg, nint wParam, nint lParam);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool IsWindowVisible(nint hWnd);
+
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, string lParam);
 
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, nint lParam);
 
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, System.Text.StringBuilder lParam);
+
         private const uint WM_SETTEXT = 0x000C;
         private const uint WM_COMMAND = 0x0111;
         private const uint BM_CLICK = 0x00F5;
         private const uint CB_GETCOUNT = 0x0146;
+        private const uint CB_FINDSTRING = 0x014C;
         private const uint CB_SELECTSTRING = 0x014D;
+        private const uint CB_GETCURSEL = 0x0147;
+        private const uint CB_GETLBTEXT = 0x0148;
+        private const uint CB_GETLBTEXTLEN = 0x0149;
+        private const uint CB_SETCURSEL = 0x014E;
         private const int IDOK = 1;
 
         protected void FillInputBoxAndClickOk(string inputText)
         {
-            var inputDialog = WaitForDialog();
-            if (inputDialog == null)
-                return;
+            // ==================================================================
+            // Approach 1 — UIA: find the dialog via the UIA tree.
+            // ==================================================================
+            var inputDialog = WaitForDialog(null, TimeSpan.FromSeconds(3));
 
-            // Find the InputBox top-level window. Use a polling retry loop because
-            // the Win32 HWND may not be registered yet even though the UIA tree
-            // already has the element (timing race between UIA and Win32).
+            // ==================================================================
+            // Approach 2 — Win32: find the VB InputBox by its native HWND.
+            // Use a polling retry loop because the HWND may not be registered
+            // yet even though the dialog is visible (timing race between the
+            // Win32 window manager and UIA).
+            // ==================================================================
             nint hwnd = nint.Zero;
-            var hwndDeadline = DateTime.Now.AddSeconds(3);
+            var hwndDeadline = DateTime.Now.AddSeconds(4);
             while (hwnd == nint.Zero && DateTime.Now < hwndDeadline)
             {
                 try
@@ -421,9 +491,66 @@ namespace ToDoList.Tests.UITests
                     Thread.Sleep(100);
             }
 
-            if (hwnd == nint.Zero)
+            // ==================================================================
+            // Approach 3 — Last resort: use SendKeys blindly.
+            // ==================================================================
+            if (hwnd == nint.Zero && inputDialog == null)
             {
-                // Last resort: try to bring any dialog to foreground and use SendKeys
+                // We have no handle to the dialog at all.
+                // Try to bring whatever is in front into focus and use SendKeys.
+                Thread.Sleep(300);
+                System.Windows.Forms.SendKeys.SendWait("^a");
+                Thread.Sleep(100);
+                System.Windows.Forms.SendKeys.SendWait(inputText);
+                Thread.Sleep(100);
+                System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+                Thread.Sleep(500);
+                return;
+            }
+
+            // ==================================================================
+            // If we have the Win32 HWND, interact via native messages.
+            // ==================================================================
+            if (hwnd != nint.Zero)
+            {
+                // Get child HWNDs via FindWindowEx with standard Win32 class names.
+                // The VB InputBox is a native Win32 dialog with class names "Edit" and "Button".
+                nint hEdit = FindWindowEx(hwnd, nint.Zero, "Edit", null);
+
+                // Set the text directly via WM_SETTEXT (no foreground focus needed).
+                if (hEdit != nint.Zero)
+                {
+                    SendMessage(hEdit, WM_SETTEXT, nint.Zero, inputText);
+                    Thread.Sleep(100);
+                }
+
+                // Dismiss the InputBox via BM_CLICK on the OK button.
+                // This avoids SendKeys/SetForegroundWindow which can steal focus
+                // and cause buffered keystrokes to reach the main form.
+                // The VB InputBox OK button is the first Button child.
+                nint hOkBtn = FindWindowEx(hwnd, nint.Zero, "Button", null);
+                if (hOkBtn != nint.Zero)
+                {
+                    SendMessage(hOkBtn, BM_CLICK, nint.Zero, nint.Zero);
+                    Thread.Sleep(300);
+                    return;
+                }
+
+                // Fallback: if BM_CLICK didn't work, use SendKeys as last resort
+                // (only foreground the InputBox itself, not the main form)
+                SwitchToThisWindow(hwnd, fAltTab: false);
+                Thread.Sleep(100);
+                System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+                Thread.Sleep(300);
+                return;
+            }
+
+            // ==================================================================
+            // We have the UIA element but not the Win32 HWND.
+            // Try foreground + SendKeys.
+            // ==================================================================
+            if (inputDialog != null)
+            {
                 BringWindowToForeground(inputDialog.Properties.NativeWindowHandle);
                 Thread.Sleep(200);
                 System.Windows.Forms.SendKeys.SendWait("^a");
@@ -432,41 +559,7 @@ namespace ToDoList.Tests.UITests
                 Thread.Sleep(100);
                 System.Windows.Forms.SendKeys.SendWait("{ENTER}");
                 Thread.Sleep(300);
-                return;
             }
-
-            // Get child HWNDs via FindWindowEx with standard Win32 class names.
-            // The VB InputBox is a native Win32 dialog with class names "Edit" and "Button".
-            nint hEdit = FindWindowEx(hwnd, nint.Zero, "Edit", null);
-            if (hEdit == nint.Zero)
-                hEdit = FindWindowEx(hwnd, nint.Zero, null, null); // wildcard: any class
-
-            // Set the text directly via WM_SETTEXT (no foreground focus needed).
-            if (hEdit != nint.Zero)
-            {
-                SendMessage(hEdit, WM_SETTEXT, nint.Zero, inputText);
-                Thread.Sleep(100);
-            }
-            else
-            {
-                // Fallback: use SendKeys if we couldn't find the Edit HWND
-                SwitchToThisWindow(hwnd, fAltTab: false);
-                Thread.Sleep(200);
-                System.Windows.Forms.SendKeys.SendWait("^a");
-                Thread.Sleep(100);
-                System.Windows.Forms.SendKeys.SendWait(inputText);
-                Thread.Sleep(100);
-            }
-
-            // Dismiss the InputBox: switch it to foreground and send Enter.
-            // WM_COMMAND/GetDlgItem don't work on .NET WinForms dialogs, and
-            // UIA's Invoke()/Click() are unreliable on the VB InputBox.
-            // Using SendKeys for just the Enter key is safe because we
-            // explicitly foreground the InputBox right before sending it.
-            SwitchToThisWindow(hwnd, fAltTab: false);
-            Thread.Sleep(100);
-            System.Windows.Forms.SendKeys.SendWait("{ENTER}");
-            Thread.Sleep(300);
         }
 
         protected int GetListItemCount(int listIndex)
@@ -527,48 +620,138 @@ namespace ToDoList.Tests.UITests
         }
 
         /// <summary>
-        /// Select a ComboBox item using the native Win32 CB_SELECTSTRING message.
-        /// This bypasses FlaUI's .Select() which internally calls Expand() and
-        /// throws NullReferenceException on DataSource-bound DropDownList combos.
-        /// Falls back to FlaUI .Select() if the native handle is unavailable.
+        /// Select a ComboBox item using native Win32 messages.
+        /// For AddString-style combos (attempt 0): CB_SELECTSTRING.
+        /// For DataSource-bound DropDownList combos (attempt 1+):
+        /// CB_FINDSTRING to find the item index + CB_SETCURSEL to select it.
+        /// Verification runs inside the retry loop so transient failures
+        /// (DataSource rebinding delays, handle recreation) are retried
+        /// rather than aborting the test immediately.
         /// </summary>
         protected void SelectComboItemNative(int comboIndex, string itemText)
         {
+            // If a dialog is still open (e.g. a MessageBox blocking the UI thread),
+            // SendMessage to the combo box will deadlock. Dismiss any lingering dialog first.
+            var blocker = WaitForDialog(null, TimeSpan.FromSeconds(1));
+            if (blocker != null)
+                ClickMessageBoxOk(null);
+
             var cb = FindComboBoxByIndex(comboIndex);
             Assert.NotNull(cb);
 
-            // Try Win32 CB_SELECTSTRING first – avoids UIA ExpandCollapse entirely
-            for (int attempt = 0; attempt < 5; attempt++)
+            for (int attempt = 0; attempt < 10; attempt++)
             {
                 try
                 {
                     var hwnd = cb!.Properties.NativeWindowHandle;
-                    if (hwnd != nint.Zero)
+                    if (hwnd == nint.Zero)
+                        throw new InvalidOperationException("ComboBox has no window handle");
+
+                    if (attempt == 0)
                     {
+                        // First attempt: Win32 CB_SELECTSTRING (works for AddString-
+                        // style combos but returns CB_ERR for DataSource-bound ones).
                         nint result = SendMessage(hwnd, CB_SELECTSTRING, new nint(-1), itemText);
-                        if (result != -1) // CB_ERR
+                        if (result != -1)
+                            Thread.Sleep(150);
+                    }
+                    else
+                    {
+                        // DataSource-bound DropDownList: CB_SELECTSTRING returns
+                        // CB_ERR, so use CB_FINDSTRING to locate the item index
+                        // (starts searching from -1 = beginning) and CB_SETCURSEL
+                        // to set the Win32 selection. This works regardless of
+                        // whether the UIA ExpandCollapse pattern is available.
+                        int idx = (int)SendMessage(hwnd, CB_FINDSTRING, new nint(-1), itemText);
+                        if (idx >= 0)
                         {
-                            Thread.Sleep(100);
-                            return;
+                            SendMessage(hwnd, CB_SETCURSEL, new nint(idx), nint.Zero);
+
+                            // CB_SETCURSEL moves the Win32 visual selection but does NOT
+                            // fire CBN_SELCHANGE, so WinForms' DataSource binding never
+                            // updates SelectedIndex — it stays -1 and button handlers
+                            // show "No Project Selected". We must send WM_COMMAND with
+                            // CBN_SELCHANGE to the form's HWND so WinForms picks it up.
+                            // comboBoxProjects is inside a GroupBox, so GetParent() returns
+                            // the GroupBox — we walk up to the top-level form window.
+                            int ctrlId = GetDlgCtrlID(hwnd);
+                            nint parentHwnd = GetParent(hwnd);
+                            // Walk up to the top-level window (the Form itself)
+                            nint topHwnd = parentHwnd;
+                            while (topHwnd != nint.Zero)
+                            {
+                                nint grandParent = GetParent(topHwnd);
+                                if (grandParent == nint.Zero) break;
+                                topHwnd = grandParent;
+                            }
+                            nint targetHwnd = topHwnd != nint.Zero ? topHwnd : parentHwnd;
+                            if (targetHwnd != nint.Zero && ctrlId != 0)
+                            {
+                                const uint CBN_SELCHANGE = 1;
+                                nint wParam = new nint((int)((CBN_SELCHANGE << 16) | (ctrlId & 0xFFFF)));
+                                SendMessage(targetHwnd, WM_COMMAND, wParam, hwnd);
+                            }
+
+                            Thread.Sleep(150);
                         }
                     }
-                }
-                catch { /* fall through to FlaUI */ }
 
-                // Fallback: FlaUI's .Select() with retry for NRE
-                try
-                {
-                    cb!.Select(itemText);
-                    Thread.Sleep(100);
-                    return;
+                    // Inline verification (retried on failure)
+                    string? selectedText = GetComboBoxSelectedText(comboIndex);
+                    if (selectedText != null &&
+                        itemText != null &&
+                        selectedText.Equals(itemText, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return; // success
+                    }
                 }
-                catch (NullReferenceException)
+                catch
                 {
-                    if (attempt == 4) throw;
-                    Thread.Sleep(300);
-                    cb = FindComboBoxByIndex(comboIndex);
-                    if (cb == null) throw;
+                    // Re-acquire the combo box (handle may be recreated after
+                    // DataSource rebinding, etc.)
                 }
+
+                Thread.Sleep(400);
+                cb = FindComboBoxByIndex(comboIndex);
+                if (cb == null)
+                    throw new InvalidOperationException("ComboBox not found after refresh");
+            }
+
+            Assert.Fail(
+                $"Failed to select '{itemText}' in ComboBox index {comboIndex}: all attempts exhausted");
+        }
+
+        /// <summary>
+        /// Read the currently selected text from a ComboBox using Win32
+        /// CB_GETCURSEL + CB_GETLBTEXT. Returns null if the handle cannot be
+        /// obtained or no item is selected (CB_ERR).
+        /// </summary>
+        protected string? GetComboBoxSelectedText(int comboIndex)
+        {
+            var cb = FindComboBoxByIndex(comboIndex);
+            if (cb == null) return null;
+
+            try
+            {
+                var hwnd = cb.Properties.NativeWindowHandle;
+                if (hwnd == nint.Zero) return null;
+
+                // Get current selection index
+                int selIndex = (int)SendMessage(hwnd, CB_GETCURSEL, nint.Zero, nint.Zero);
+                if (selIndex == -1) // CB_ERR — no selection
+                    return null;
+
+                // Get the text of the selected item
+                int textLen = (int)SendMessage(hwnd, CB_GETLBTEXTLEN, new nint(selIndex), nint.Zero);
+                if (textLen <= 0) return null;
+
+                var sb = new System.Text.StringBuilder(textLen + 1);
+                SendMessage(hwnd, CB_GETLBTEXT, new nint(selIndex), sb);
+                return sb.ToString();
+            }
+            catch
+            {
+                return null;
             }
         }
 

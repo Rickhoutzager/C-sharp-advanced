@@ -413,7 +413,7 @@ namespace to_do_list
 
         private void btnAddToProject_Click(object sender, EventArgs e)
         {
-            if (comboBoxProjects.SelectedItem == null)
+            if (comboBoxProjects.SelectedIndex < 0)
             {
                 MessageBox.Show("Please select a project first.", "No Project Selected", 
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -427,7 +427,7 @@ namespace to_do_list
                 return;
             }
 
-            var selectedProject = (TodoComposite)comboBoxProjects.SelectedItem;
+            var selectedProject = projects[comboBoxProjects.SelectedIndex];
             TodoItem selectedItem = null;
 
             if (listBoxIncomplete.SelectedItem != null)
