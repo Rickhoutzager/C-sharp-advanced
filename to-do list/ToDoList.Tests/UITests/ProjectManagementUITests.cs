@@ -64,10 +64,13 @@ namespace ToDoList.Tests.UITests
             // Dismiss the success message box
             ClickMessageBoxOk("Project Created");
 
-            // Verify the project was added to the combo box
-            var comboBox = FindComboBoxByIndex(ProjectsComboBoxIndex);
-            Assert.NotNull(comboBox);
-            Assert.True(comboBox!.Items.Length > 0);
+            // Allow the UI thread time to process the DataSource binding update
+            Thread.Sleep(500);
+
+            // Verify the project was added to the combo box by selecting it.
+            // SelectComboItemNative uses Win32 CB_SELECTSTRING to avoid the
+            // FlaUI ExpandCollapse NullReferenceException on DataSource-bound combos.
+            SelectComboItemNative(ProjectsComboBoxIndex, "Test Project");
         }
 
         [Fact]
@@ -82,9 +85,10 @@ namespace ToDoList.Tests.UITests
 
             ClickMessageBoxOk("Project Created");
 
-            var comboBox = FindComboBoxByIndex(ProjectsComboBoxIndex);
-            Assert.NotNull(comboBox);
-            Assert.True(comboBox!.Items.Length > 0);
+            // Allow the UI thread time to process the DataSource binding update
+            Thread.Sleep(500);
+
+            SelectComboItemNative(ProjectsComboBoxIndex, "New Project");
         }
 
         [Fact]

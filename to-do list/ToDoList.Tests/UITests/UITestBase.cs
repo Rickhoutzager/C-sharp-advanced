@@ -210,8 +210,27 @@ namespace ToDoList.Tests.UITests
         {
             var cb = FindComboBoxByIndex(comboIndex);
             Assert.NotNull(cb);
-            cb!.Select(itemText);
-            Thread.Sleep(100);
+
+            // FlaUI's .Select() internally calls Expand() which can throw
+            // NullReferenceException on DropDownList ComboBoxes whose UIA
+            // expand-collapse pattern isn't ready yet. Retry with delays.
+            for (int attempt = 0; attempt < 5; attempt++)
+            {
+                try
+                {
+                    cb!.Select(itemText);
+                    Thread.Sleep(100);
+                    return;
+                }
+                catch (NullReferenceException)
+                {
+                    if (attempt == 4) throw;
+                    Thread.Sleep(300);
+                    // Re-find the ComboBox to get a fresh UIA element
+                    cb = FindComboBoxByIndex(comboIndex);
+                    if (cb == null) throw;
+                }
+            }
         }
 
         /// <summary>
@@ -254,9 +273,29 @@ namespace ToDoList.Tests.UITests
             var dialog = WaitForDialog(expectedTitlePart);
             if (dialog != null)
             {
+                // Try UIA button click first
                 var okButton = dialog.FindFirstDescendant(
                     c => c.ByControlType(FlaUI.Core.Definitions.ControlType.Button));
                 okButton?.AsButton().Click();
+
+                // Verify the dialog actually closed; if not, use SendKeys fallback.
+                // MessageBox buttons in WinForms can be inside a pane that
+                // FindFirstDescendant misses, leaving the dialog open and
+                // breaking subsequent tests.
+                Thread.Sleep(200);
+                var stillAlive = WaitForDialog(expectedTitlePart, TimeSpan.FromSeconds(1));
+                if (stillAlive != null)
+                {
+                    // SendKeys fallback: ENTER activates the default button (OK)
+                    System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+                    Thread.Sleep(300);
+                }
+            }
+            else
+            {
+                // Dialog not found via UIA — try SendKeys ENTER as last resort
+                // (may dismiss a lingering MessageBox that UIA couldn't see)
+                System.Windows.Forms.SendKeys.SendWait("{ENTER}");
                 Thread.Sleep(300);
             }
         }
@@ -328,58 +367,106 @@ namespace ToDoList.Tests.UITests
         private static extern bool SetForegroundWindow(nint hWnd);
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern void SwitchToThisWindow(nint hWnd, bool fAltTab);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool ShowWindow(nint hWnd, uint nCmdShow);
 
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern nint FindWindow(string? lpClassName, string? lpWindowName);
 
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern nint FindWindowEx(nint hwndParent, nint hwndChildAfter, string? lpszClass, string? lpszWindow);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern nint GetDlgItem(nint hDlg, int nIDDlgItem);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, string lParam);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, nint lParam);
+
+        private const uint WM_SETTEXT = 0x000C;
+        private const uint WM_COMMAND = 0x0111;
+        private const uint BM_CLICK = 0x00F5;
+        private const uint CB_GETCOUNT = 0x0146;
+        private const uint CB_SELECTSTRING = 0x014D;
+        private const int IDOK = 1;
+
         protected void FillInputBoxAndClickOk(string inputText)
         {
             var inputDialog = WaitForDialog();
-            if (inputDialog != null)
+            if (inputDialog == null)
+                return;
+
+            // Find the InputBox top-level window. Use a polling retry loop because
+            // the Win32 HWND may not be registered yet even though the UIA tree
+            // already has the element (timing race between UIA and Win32).
+            nint hwnd = nint.Zero;
+            var hwndDeadline = DateTime.Now.AddSeconds(3);
+            while (hwnd == nint.Zero && DateTime.Now < hwndDeadline)
             {
-                // Try to find the InputBox by its window title and bring it to foreground
-                nint hwnd = nint.Zero;
                 try
                 {
                     // The VB InputBox title is the second parameter of Interaction.InputBox
                     // e.g. InputBox("Enter project name:", "Create Project", "New Project")
                     hwnd = FindWindow(null, "Create Project");
                     if (hwnd == nint.Zero)
-                    {
                         hwnd = FindWindow(null, "InputBox");
-                    }
                 }
                 catch { }
 
-                if (hwnd != nint.Zero)
-                {
-                    BringWindowToForeground(hwnd);
-                    Thread.Sleep(200);
-                }
-
-                // Focus the edit field in the InputBox dialog by clicking it via UIA
-                var editField = inputDialog.FindFirstDescendant(
-                    c => c.ByControlType(FlaUI.Core.Definitions.ControlType.Edit));
-                if (editField != null)
-                {
-                    editField.Click();
+                if (hwnd == nint.Zero)
                     Thread.Sleep(100);
-                }
+            }
 
-                // Use System.Windows.Forms.SendKeys which is already working in this file
-                // Ctrl+A to select all existing text in the InputBox
+            if (hwnd == nint.Zero)
+            {
+                // Last resort: try to bring any dialog to foreground and use SendKeys
+                BringWindowToForeground(inputDialog.Properties.NativeWindowHandle);
+                Thread.Sleep(200);
                 System.Windows.Forms.SendKeys.SendWait("^a");
                 Thread.Sleep(100);
-
-                // Type the input text
                 System.Windows.Forms.SendKeys.SendWait(inputText);
                 Thread.Sleep(100);
-
-                // Press Enter to click the default OK button
                 System.Windows.Forms.SendKeys.SendWait("{ENTER}");
                 Thread.Sleep(300);
+                return;
             }
+
+            // Get child HWNDs via FindWindowEx with standard Win32 class names.
+            // The VB InputBox is a native Win32 dialog with class names "Edit" and "Button".
+            nint hEdit = FindWindowEx(hwnd, nint.Zero, "Edit", null);
+            if (hEdit == nint.Zero)
+                hEdit = FindWindowEx(hwnd, nint.Zero, null, null); // wildcard: any class
+
+            // Set the text directly via WM_SETTEXT (no foreground focus needed).
+            if (hEdit != nint.Zero)
+            {
+                SendMessage(hEdit, WM_SETTEXT, nint.Zero, inputText);
+                Thread.Sleep(100);
+            }
+            else
+            {
+                // Fallback: use SendKeys if we couldn't find the Edit HWND
+                SwitchToThisWindow(hwnd, fAltTab: false);
+                Thread.Sleep(200);
+                System.Windows.Forms.SendKeys.SendWait("^a");
+                Thread.Sleep(100);
+                System.Windows.Forms.SendKeys.SendWait(inputText);
+                Thread.Sleep(100);
+            }
+
+            // Dismiss the InputBox: switch it to foreground and send Enter.
+            // WM_COMMAND/GetDlgItem don't work on .NET WinForms dialogs, and
+            // UIA's Invoke()/Click() are unreliable on the VB InputBox.
+            // Using SendKeys for just the Enter key is safe because we
+            // explicitly foreground the InputBox right before sending it.
+            SwitchToThisWindow(hwnd, fAltTab: false);
+            Thread.Sleep(100);
+            System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+            Thread.Sleep(300);
         }
 
         protected int GetListItemCount(int listIndex)
@@ -387,6 +474,102 @@ namespace ToDoList.Tests.UITests
             var listBox = FindListBoxByIndex(listIndex);
             if (listBox == null) return 0;
             return listBox.Items.Length;
+        }
+
+        /// <summary>
+        /// Safely get the number of items in a ComboBox.
+        /// Uses a retry loop with the native Win32 CB_GETCOUNT message because
+        /// FlaUI's .Items property internally calls Expand() which throws
+        /// NullReferenceException for DataSource-bound DropDownList-style
+        /// ComboBoxes (the UIA ExpandCollapse pattern provider is not available
+        /// for these controls). Falls back to FlaUI .Items if the native handle
+        /// is unavailable.
+        /// </summary>
+        protected int GetComboBoxItemCountSafe(int comboIndex)
+        {
+            // Retry loop: the UIA tree and native window handle may need
+            // time after programmatic DataSource changes.
+            for (int retry = 0; retry < 5; retry++)
+            {
+                var combo = FindComboBoxByIndex(comboIndex);
+                if (combo == null) return 0;
+
+                // Approach 1: Win32 CB_GETCOUNT – bypasses UIA ExpandCollapse
+                try
+                {
+                    var hwnd = combo.Properties.NativeWindowHandle;
+                    if (hwnd != nint.Zero)
+                    {
+                        int count = (int)SendMessage(hwnd, CB_GETCOUNT, nint.Zero, nint.Zero);
+                        if (count > 0) return count;
+                    }
+                }
+                catch { /* CB_GETCOUNT may fail if handle is stale; fall through */ }
+
+                // Approach 2: FlaUI .Items (may throw NRE for DataSource-bound combos)
+                try
+                {
+                    return combo.Items.Length;
+                }
+                catch (NullReferenceException)
+                {
+                    // UIA ExpandCollapse not ready; retry after delay
+                    if (retry == 4) return 0;
+                }
+                catch
+                {
+                    return 0;
+                }
+
+                Thread.Sleep(300);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Select a ComboBox item using the native Win32 CB_SELECTSTRING message.
+        /// This bypasses FlaUI's .Select() which internally calls Expand() and
+        /// throws NullReferenceException on DataSource-bound DropDownList combos.
+        /// Falls back to FlaUI .Select() if the native handle is unavailable.
+        /// </summary>
+        protected void SelectComboItemNative(int comboIndex, string itemText)
+        {
+            var cb = FindComboBoxByIndex(comboIndex);
+            Assert.NotNull(cb);
+
+            // Try Win32 CB_SELECTSTRING first – avoids UIA ExpandCollapse entirely
+            for (int attempt = 0; attempt < 5; attempt++)
+            {
+                try
+                {
+                    var hwnd = cb!.Properties.NativeWindowHandle;
+                    if (hwnd != nint.Zero)
+                    {
+                        nint result = SendMessage(hwnd, CB_SELECTSTRING, new nint(-1), itemText);
+                        if (result != -1) // CB_ERR
+                        {
+                            Thread.Sleep(100);
+                            return;
+                        }
+                    }
+                }
+                catch { /* fall through to FlaUI */ }
+
+                // Fallback: FlaUI's .Select() with retry for NRE
+                try
+                {
+                    cb!.Select(itemText);
+                    Thread.Sleep(100);
+                    return;
+                }
+                catch (NullReferenceException)
+                {
+                    if (attempt == 4) throw;
+                    Thread.Sleep(300);
+                    cb = FindComboBoxByIndex(comboIndex);
+                    if (cb == null) throw;
+                }
+            }
         }
 
         protected string GetListItemText(int listIndex, int itemIndex)
